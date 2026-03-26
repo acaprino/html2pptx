@@ -6,7 +6,7 @@ Renders each HTML in Playwright, extracts DOM element positions and
 computed styles via JavaScript, creates python-pptx shapes and textboxes.
 SVGs and Font Awesome icons are screenshotted and embedded as images.
 """
-import os, re, sys, tempfile
+import argparse, os, re, sys, tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from pptx import Presentation
@@ -82,7 +82,20 @@ ALIGN = {
 # ── JavaScript DOM extraction (executed inside Playwright browser) ───
 
 JS = r"""() => {
-    const c = document.querySelector('.w-\\[1280px\\]') || document.querySelector('[class*="1280"]');
+    // Container detection: find the largest visible top-level element
+    const c = (function() {
+        var best = null, bestArea = 0;
+        var ch = document.body.children;
+        for (var i = 0; i < ch.length; i++) {
+            var el = ch[i], tag = el.tagName;
+            if (!tag || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'LINK' || tag === 'META') continue;
+            var s = getComputedStyle(el);
+            if (s.display === 'none' || s.visibility === 'hidden') continue;
+            var r = el.getBoundingClientRect();
+            if (r.width * r.height > bestArea) { bestArea = r.width * r.height; best = el; }
+        }
+        return bestArea >= 100 ? best : null;
+    })();
     if (!c) return null;
     const cr = c.getBoundingClientRect();
     const ox = cr.left, oy = cr.top;
@@ -267,6 +280,55 @@ JS = r"""() => {
     }
 
     walk(c);
+
+    // Measure font width ratios: web font vs Windows fallback
+    var _fonts = {};
+    for (var _ti = 0; _ti < out.texts.length; _ti++) {
+        for (var _ri = 0; _ri < out.texts[_ti].runs.length; _ri++) {
+            var _ff = out.texts[_ti].runs[_ri].ff;
+            if (_ff) _fonts[_ff] = 1;
+        }
+    }
+    var _SYS = {'Segoe UI':1,'Arial':1,'Calibri':1,'Times New Roman':1,
+                'Consolas':1,'Courier New':1,'Verdana':1,'Tahoma':1,'Georgia':1,'Trebuchet MS':1};
+    var _REF = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    out.fontRatios = {};
+    var _fnames = Object.keys(_fonts);
+    for (var _fi = 0; _fi < _fnames.length; _fi++) {
+        var _fn = _fnames[_fi];
+        if (_SYS[_fn]) continue;
+        // Measure web font
+        var _s1 = document.createElement('span');
+        _s1.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;font-family:"' + _fn + '",sans-serif';
+        _s1.textContent = _REF;
+        document.body.appendChild(_s1);
+        // Detect monospace: compare narrow vs wide chars
+        var _mi = document.createElement('span');
+        _mi.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;font-family:"' + _fn + '"';
+        _mi.textContent = 'iiiiii';
+        var _mw = document.createElement('span');
+        _mw.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;font-family:"' + _fn + '"';
+        _mw.textContent = 'MMMMMM';
+        document.body.appendChild(_mi);
+        document.body.appendChild(_mw);
+        var _isMono = Math.abs(_mi.getBoundingClientRect().width - _mw.getBoundingClientRect().width) < 2;
+        document.body.removeChild(_mi);
+        document.body.removeChild(_mw);
+        var _fb = _isMono ? 'Consolas' : 'Segoe UI';
+        // Measure fallback font
+        var _s2 = document.createElement('span');
+        _s2.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;font-family:"' + _fb + '",sans-serif';
+        _s2.textContent = _REF;
+        document.body.appendChild(_s2);
+        var _w1 = _s1.getBoundingClientRect().width;
+        var _w2 = _s2.getBoundingClientRect().width;
+        document.body.removeChild(_s1);
+        document.body.removeChild(_s2);
+        if (_w1 > 0 && _w2 > 0) {
+            out.fontRatios[_fn] = {r: _w1 / _w2, fb: _fb};
+        }
+    }
+
     return out;
 }"""
 
@@ -364,12 +426,14 @@ def build_slide(prs, data, images):
 
     elems.sort(key=lambda e: e[1])
 
+    font_ratios = data.get('fontRatios', {})
+
     for etype, _, ed in elems:
         try:
             if etype == 'shape':
                 _add_shape(slide, ed)
             elif etype == 'text':
-                _add_text(slide, ed)
+                _add_text(slide, ed, font_ratios)
             elif etype == 'image':
                 _add_image(slide, ed)
         except Exception as e:
@@ -394,10 +458,12 @@ def _add_shape(slide, s):
     shp.line.fill.background()  # no outline
 
 
-def _add_text(slide, t):
+def _add_text(slide, t, font_ratios=None):
     runs = t.get('runs', [])
     if not runs or t['w'] < 2:
         return
+    if font_ratios is None:
+        font_ratios = {}
 
     x, y, w, h = t['x'], t['y'], t['w'], t['h']
     ta = t.get('ta', 'left')
@@ -410,9 +476,10 @@ def _add_text(slide, t):
     # If text height > 1.8x font size, it's multi-line (paragraph that should wrap)
     is_multiline = h > max_fs * 1.8
 
-    # Font-aware width adjustment
+    # Font-aware width adjustment (measured ratio > hardcoded > 1.0)
     primary_font = runs[0].get('ff', 'Segoe UI') if runs else 'Segoe UI'
-    ratio = FONT_RATIOS.get(primary_font, 1.0)
+    measured = font_ratios.get(primary_font, {})
+    ratio = measured.get('r', FONT_RATIOS.get(primary_font, 1.0))
     fallback_factor = (1.0 / ratio) * 1.05
 
     if is_multiline:
@@ -481,7 +548,8 @@ def _add_text(slide, t):
             hlR = hlP.add_run()
             hlR.text = hl_text
             web_font = rd.get('ff', 'Segoe UI')
-            hlR.font.name = FONT_MAP.get(web_font, web_font)
+            m = font_ratios.get(web_font, {})
+            hlR.font.name = m.get('fb', FONT_MAP.get(web_font, web_font))
             hlR.font.size = Pt(rd.get('fs', 16) * 0.75)
             hlR.font.bold = rd.get('fw', 400) >= 600
             co = parse_rgba(rd.get('co', ''))
@@ -504,7 +572,8 @@ def _add_text(slide, t):
         r = p.add_run()
         r.text = text
         web_font = rd.get('ff', 'Segoe UI')
-        r.font.name = FONT_MAP.get(web_font, web_font)
+        m = font_ratios.get(web_font, {})
+        r.font.name = m.get('fb', FONT_MAP.get(web_font, web_font))
         # Convert CSS pixels to typographic points: 96px = 72pt
         r.font.size = Pt(rd.get('fs', 16) * 0.75)
         r.font.bold = rd.get('fw', 400) >= 600
@@ -537,8 +606,29 @@ def _add_image(slide, img):
 def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
-    html_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else HTML_DIR
-    output = Path(sys.argv[2]) if len(sys.argv) > 2 else OUTPUT
+
+    parser = argparse.ArgumentParser(description='Convert HTML slides to native PPTX elements')
+    parser.add_argument('html_dir', nargs='?', default=str(HTML_DIR),
+                        help='Directory with HTML files (default: presentazione_html)')
+    parser.add_argument('output', nargs='?', default=str(OUTPUT),
+                        help='Output PPTX path (default: Slides1.pptx)')
+    parser.add_argument('--width', type=int, default=VP_W,
+                        help='Viewport width in pixels (default: %(default)s)')
+    parser.add_argument('--height', type=int, default=VP_H,
+                        help='Viewport height in pixels (default: %(default)s)')
+    args = parser.parse_args()
+
+    html_dir = Path(args.html_dir)
+    output = Path(args.output)
+
+    # Update globals so px(), build_slide(), etc. use the right dimensions
+    global VP_W, VP_H, SLIDE_W, SLIDE_H, SCALE
+    VP_W, VP_H = args.width, args.height
+    if VP_W <= 0 or VP_H <= 0:
+        parser.error("--width and --height must be positive integers")
+    SLIDE_H = Inches(7.5)
+    SLIDE_W = Inches(7.5 * VP_W / VP_H)  # preserve aspect ratio
+    SCALE = SLIDE_W / VP_W
 
     files = sorted(html_dir.glob("*.html"),
                    key=lambda f: (0, int(f.stem)) if f.stem.isdigit() else (1, f.stem))
