@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>La Storia fa Rima</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Custom Colors */
+        .text-tri-tech-orange { color: #FF6200; }
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        /* Card Styles */
+        .card-light {
+            background-color: #F8F8F8;
+            border-left: 1px solid #E5E5E5;
+            border-right: 1px solid #E5E5E5;
+            border-bottom: 1px solid #E5E5E5;
+            /* Top border is handled via specific classes for coloring */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .card-highlight {
+            background-color: #FFF5F0;
+            border: 1px solid #FF6200;
+            box-shadow: 0 4px 12px rgba(255, 98, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-[#1A1A1A]">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header Section -->
+<div class="flex justify-between items-start mb-8 z-10">
+<div>
+<h2 class="font-poppins font-bold text-4xl text-[#1A1A1A] mb-2">
+                    La storia fa rima: <span class="text-tri-tech-orange">L'evoluzione dell'astrazione</span>
+</h2>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    Ogni rivoluzione tecnologica ha spostato il lavoro "up the stack"
+                </p>
+</div>
+<!-- Logo small -->
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-[#1A1A1A]">TIA <span class="text-[#FF6200]">BLUEPRINT</span></p>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 relative flex flex-col justify-center items-center mt-4">
+<!-- Timeline Horizontal Line -->
+<div class="absolute top-1/2 left-4 right-4 h-1 bg-gray-200 transform -translate-y-1/2 z-0"></div>
+<!-- Timeline Nodes Container -->
+<div class="w-full grid grid-cols-4 gap-6 z-10 relative h-96 items-center">
+<!-- Era 1: Pre-1950s -> 1952 -->
+<div class="flex flex-col items-center group h-full justify-between py-4">
+<!-- Top Content (Up) -->
+<div class="w-full card-light p-5 rounded-lg border-t-4 border-t-[#FF6200] transition-all duration-300 transform group-hover:-translate-y-1 h-40 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-microchip text-tri-tech-orange text-xl mr-2"></i>
+<h3 class="font-poppins font-bold text-lg text-[#1A1A1A]">Codice Macchina</h3>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug flex-1">
+                            Dai bit manuali ai primi <span class="text-[#1A1A1A] font-semibold">Compilatori</span>.
+                        </p>
+<div class="mt-2 text-xs font-mono text-tri-tech-orange border-t border-gray-200 pt-2">
+                            Si smette di contare bit
+                        </div>
+</div>
+<!-- Node Point -->
+<div class="relative w-6 h-6 rounded-full bg-white border-4 border-gray-300 group-hover:border-[#FF6200] flex items-center justify-center z-20 my-4 transition-colors duration-300">
+</div>
+<!-- Date (Down) -->
+<div class="text-center h-10">
+<p class="font-mono text-2xl font-bold text-gray-400 group-hover:text-gray-600 transition-colors">1952</p>
+<p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Abstraction L1</p>
+</div>
+</div>
+<!-- Era 2: 1970-2000 -->
+<div class="flex flex-col items-center group h-full justify-between py-4">
+<!-- Date (Up) -->
+<div class="text-center h-10 flex flex-col justify-end">
+<p class="font-mono text-2xl font-bold text-gray-400 group-hover:text-gray-600 transition-colors">1970-00</p>
+<p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Abstraction L2</p>
+</div>
+<!-- Node Point -->
+<div class="relative w-6 h-6 rounded-full bg-white border-4 border-gray-300 group-hover:border-[#FF6200] flex items-center justify-center z-20 my-4 transition-colors duration-300">
+</div>
+<!-- Bottom Content (Down) -->
+<div class="w-full card-light p-5 rounded-lg border-b-4 border-b-[#FF6200] transition-all duration-300 transform group-hover:translate-y-1 h-40 flex flex-col justify-end">
+<div class="flex items-center mb-2">
+<i class="fas fa-code text-tri-tech-orange text-xl mr-2"></i>
+<h3 class="font-poppins font-bold text-lg text-[#1A1A1A]">Procedurale → OOP</h3>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug flex-1">
+                            Astrazione dai registri CPU alla logica a oggetti.
+                        </p>
+<div class="mt-2 text-xs font-mono text-tri-tech-orange border-t border-gray-200 pt-2">
+                            Si smette di gestire memoria
+                        </div>
+</div>
+</div>
+<!-- Era 3: 2010s -->
+<div class="flex flex-col items-center group h-full justify-between py-4">
+<!-- Top Content (Up) -->
+<div class="w-full card-light p-5 rounded-lg border-t-4 border-t-[#FF6200] transition-all duration-300 transform group-hover:-translate-y-1 h-40 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-cloud text-tri-tech-orange text-xl mr-2"></i>
+<h3 class="font-poppins font-bold text-lg text-[#1A1A1A]">Cloud &amp; DevOps</h3>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug flex-1">
+                            Dai server fisici all'infrastruttura come codice.
+                        </p>
+<div class="mt-2 text-xs font-mono text-tri-tech-orange border-t border-gray-200 pt-2">
+                            Si smette di gestire hardware
+                        </div>
+</div>
+<!-- Node Point -->
+<div class="relative w-6 h-6 rounded-full bg-white border-4 border-gray-300 group-hover:border-[#FF6200] flex items-center justify-center z-20 my-4 transition-colors duration-300">
+</div>
+<!-- Date (Down) -->
+<div class="text-center h-10">
+<p class="font-mono text-2xl font-bold text-gray-400 group-hover:text-gray-600 transition-colors">2010s</p>
+<p class="text-xs text-gray-400 uppercase tracking-widest mt-1">Abstraction L3</p>
+</div>
+</div>
+<!-- Era 4: OGGI -->
+<div class="flex flex-col items-center group h-full justify-between py-4">
+<!-- Date (Up) -->
+<div class="text-center h-10 flex flex-col justify-end">
+<p class="font-mono text-3xl font-bold text-tri-tech-orange">OGGI</p>
+<p class="text-xs text-[#1A1A1A] uppercase tracking-widest mt-1 font-bold">NEXT LEVEL</p>
+</div>
+<!-- Node Point -->
+<div class="relative w-10 h-10 rounded-full bg-tri-tech-orange shadow-md flex items-center justify-center z-20 my-4">
+<div class="w-4 h-4 bg-white rounded-full"></div>
+</div>
+<!-- Bottom Content (Down) -->
+<div class="w-full card-highlight p-5 rounded-lg transition-all duration-300 transform group-hover:translate-y-1 h-40 flex flex-col justify-end relative overflow-hidden">
+<div class="absolute top-0 right-0 p-1">
+<i class="fas fa-bolt text-[#FF6200] opacity-10 text-4xl"></i>
+</div>
+<div class="flex items-center mb-2 relative z-10">
+<i class="fas fa-brain text-[#1A1A1A] text-xl mr-2"></i>
+<h3 class="font-poppins font-bold text-lg text-[#1A1A1A]">IA Generativa</h3>
+</div>
+<p class="font-inter text-sm text-gray-700 leading-snug flex-1 relative z-10">
+                            Dal codice manuale alla generazione semantica.
+                        </p>
+<div class="mt-2 text-xs font-mono text-white bg-[#FF6200] px-2 py-1 rounded inline-block w-max font-bold relative z-10">
+                            Si smette di scrivere boilerplate
+                        </div>
+</div>
+</div>
+</div>
+<!-- Contextual Message Bottom -->
+<div class="absolute bottom-4 right-0 bg-[#F8F8F8] border-l-4 border-[#FF6200] py-2 px-6 max-w-xl shadow-sm">
+<p class="font-inter text-sm text-gray-600 italic">
+                    "L'IA Generativa è il prossimo livello di astrazione — chi non sale resta indietro. È un pattern storico che si ripete."
+                </p>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 left-12 flex items-center space-x-2">
+<div class="h-1 w-12 bg-gray-300 rounded-full"></div>
+<p class="font-mono text-[10px] text-gray-400">HISTORICAL_PATTERN_ANALYSIS</p>
+</div>
+</div>
+</body>
+</html>

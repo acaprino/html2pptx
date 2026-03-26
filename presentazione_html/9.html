@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Programmare DI IA vs CON IA</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Light Theme Colors */
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        
+        /* Table Styles */
+        .comparison-row {
+            border-bottom: 1px solid #E5E5E5;
+            transition: background-color 0.2s;
+        }
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        .comparison-row:hover {
+            background-color: #F9FAFB;
+        }
+        
+        /* Highlight Column Styles */
+        .highlight-col-bg {
+            background-color: #FFF5F0; /* Light Orange */
+            border-left: 1px solid #FFDbb5;
+            border-right: 1px solid #FFDbb5;
+        }
+        
+        .highlight-header {
+            background-color: #FF6200;
+            box-shadow: 0 4px 15px rgba(255, 98, 0, 0.2);
+        }
+
+        /* Standard Column Styles */
+        .standard-col-bg {
+            background-color: #FFFFFF;
+            border-left: 1px solid #E5E5E5;
+            border-right: 1px solid #E5E5E5;
+        }
+
+        .standard-header {
+            background-color: #F8F8F8;
+            border-top: 1px solid #E5E5E5;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Background Decorative Elements -->
+<div class="absolute top-0 right-0 w-96 h-96 bg-orange-100 opacity-40 rounded-full filter blur-3xl pointer-events-none transform translate-x-1/3 -translate-y-1/3"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 opacity-60 rounded-full filter blur-3xl pointer-events-none transform -translate-x-1/3 translate-y-1/3"></div>
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                    Il Cambio di Paradigma: <span class="text-tri-tech-orange">La distinzione che cambia tutto</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light max-w-3xl">
+                    Tri-Tech non forma data scientist. Forma professionisti che <span class="text-gray-900 font-bold">USANO</span> l'IA come strumento.
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">STRATEGY</span></p>
+</div>
+</div>
+<!-- Comparison Table Container -->
+<div class="flex-1 w-full flex flex-col z-10 relative mt-2 shadow-sm rounded-lg">
+<!-- Table Headers -->
+<div class="flex w-full mb-0 rounded-t-lg overflow-hidden">
+<!-- Row Header Col -->
+<div class="w-1/5 p-4 flex items-end pb-4 bg-white">
+<p class="font-mono text-xs text-gray-400 uppercase tracking-widest">Dimensioni</p>
+</div>
+<!-- Col 1 Header: Programmare DI IA -->
+<div class="w-2/5 p-6 standard-header flex flex-col justify-center items-center border-t-4 border-gray-300">
+<div class="mb-2 text-gray-400 text-3xl"><i class="fas fa-microchip"></i></div>
+<h2 class="font-poppins font-bold text-xl text-gray-700">Programmare <span class="text-gray-900">DI</span> IA</h2>
+<p class="font-inter text-xs text-gray-500 mt-1">Machine Learning Engineer</p>
+</div>
+<!-- Col 2 Header: Programmare CON IA (Highlighted) -->
+<div class="w-2/5 p-6 highlight-header flex flex-col justify-center items-center border-t-4 border-[#CC4E00] relative">
+<div class="absolute top-0 right-0 bg-white text-[#FF6200] text-[10px] font-bold px-2 py-0.5 uppercase tracking-wide transform translate-x-0 -translate-y-full rounded-t shadow-sm">
+                        Focus TIA
+                    </div>
+<div class="mb-2 text-white text-3xl"><i class="fas fa-wand-magic-sparkles"></i></div>
+<h2 class="font-poppins font-bold text-xl text-white">Programmare <span class="text-[#FF6200] bg-white px-1 rounded">CON</span> IA</h2>
+<p class="font-inter text-xs text-white font-medium mt-1 opacity-90">AI-Augmented Consultant</p>
+</div>
+</div>
+<!-- Table Body -->
+<div class="flex-1 flex flex-col border border-gray-200 rounded-b-lg overflow-hidden">
+<!-- Row 1: Definizione -->
+<div class="flex-1 flex comparison-row min-h-[90px]">
+<div class="w-1/5 p-6 flex items-center border-r border-gray-100 bg-white">
+<div class="flex items-center">
+<i class="fas fa-book text-gray-400 mr-3 w-5 text-center"></i>
+<p class="font-inter font-semibold text-gray-600">Definizione</p>
+</div>
+</div>
+<div class="w-2/5 p-6 flex items-center standard-col-bg">
+<p class="font-inter text-gray-600 leading-snug">Costruire sistemi intelligenti, modelli e algoritmi da zero.</p>
+</div>
+<div class="w-2/5 p-6 flex items-center highlight-col-bg">
+<p class="font-inter text-gray-900 font-semibold leading-snug text-lg">Usare l'IA come <span class="text-[#FF6200]">strumento</span> per costruire software, automazioni e prodotti.</p>
+</div>
+</div>
+<!-- Row 2: Attività -->
+<div class="flex-1 flex comparison-row min-h-[90px]">
+<div class="w-1/5 p-6 flex items-center border-r border-gray-100 bg-white">
+<div class="flex items-center">
+<i class="fas fa-tasks text-gray-400 mr-3 w-5 text-center"></i>
+<p class="font-inter font-semibold text-gray-600">Attività</p>
+</div>
+</div>
+<div class="w-2/5 p-6 flex items-center standard-col-bg">
+<p class="font-inter text-gray-600 leading-snug">Addestrare modelli, progettare architetture neurali, fine-tuning, data cleaning.</p>
+</div>
+<div class="w-2/5 p-6 flex items-center highlight-col-bg">
+<ul class="list-none space-y-1">
+<li class="flex items-start">
+<i class="fas fa-check text-[#FF6200] mt-1 mr-2 text-xs"></i>
+<p class="font-inter text-gray-800">Prompt Engineering</p>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-[#FF6200] mt-1 mr-2 text-xs"></i>
+<p class="font-inter text-gray-800">Context Engineering</p>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-[#FF6200] mt-1 mr-2 text-xs"></i>
+<p class="font-inter text-gray-800">Agentic Engineering</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Row 3: Requisiti -->
+<div class="flex-1 flex comparison-row min-h-[90px]">
+<div class="w-1/5 p-6 flex items-center border-r border-gray-100 bg-white">
+<div class="flex items-center">
+<i class="fas fa-graduation-cap text-gray-400 mr-3 w-5 text-center"></i>
+<p class="font-inter font-semibold text-gray-600">Requisiti</p>
+</div>
+</div>
+<div class="w-2/5 p-6 flex items-center standard-col-bg">
+<p class="font-inter text-gray-600 leading-snug">Matematica avanzata, Statistica, Teoria ML, Python scientifico.</p>
+</div>
+<div class="w-2/5 p-6 flex items-center highlight-col-bg">
+<p class="font-inter text-gray-900 font-medium leading-snug">Logica, Architettura di sistema, Pattern di design, Pensiero critico.</p>
+</div>
+</div>
+<!-- Row 4: Focus Tri-Tech -->
+<div class="flex-1 flex comparison-row min-h-[100px] border-b-0">
+<div class="w-1/5 p-6 flex items-center border-r border-gray-100 bg-white">
+<div class="flex items-center">
+<i class="fas fa-crosshairs text-gray-400 mr-3 w-5 text-center"></i>
+<p class="font-inter font-semibold text-gray-600">Focus Tri-Tech</p>
+</div>
+</div>
+<div class="w-2/5 p-6 flex items-center standard-col-bg relative overflow-hidden">
+<p class="font-inter text-gray-400 leading-snug italic relative z-10">Dominio altamente specializzato, NON è il nostro core business primario.</p>
+</div>
+<div class="w-2/5 p-6 flex items-center bg-orange-50 relative overflow-hidden border-l border-orange-200 border-r border-orange-200">
+<div class="absolute inset-0 bg-[#FF6200] opacity-5"></div>
+<div class="relative z-10 w-full">
+<p class="font-poppins font-bold text-[#FF6200] text-lg uppercase leading-tight">
+                                IL MESTIERE DI OGNI<br/>NOSTRO CONSULENTE OGGI
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Note -->
+<div class="mt-6 flex justify-end">
+<div class="flex items-center space-x-2 opacity-60">
+<div class="h-1 w-8 bg-[#FF6200]"></div>
+<p class="font-mono text-[10px] text-gray-400">PARADIGM_SHIFT_V2.0</p>
+</div>
+</div>
+</div>
+</body>
+</html>

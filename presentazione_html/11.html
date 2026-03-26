@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tri-Tech Academy Roadmap</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Custom Colors based on Tri-Tech Palette */
+        .bg-tri-tech-black { background-color: #000000; }
+        .bg-tri-tech-dark { background-color: #060606; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        .text-tri-tech-gray { color: #E5E5E5; }
+        
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(6, 6, 6, 0.8);
+            border: 1px solid rgba(255, 98, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .glass-panel-danger {
+            background: rgba(66, 24, 4, 0.9); /* #421804 */
+            border: 1px solid #F05C00;
+            box-shadow: 0 4px 30px rgba(240, 92, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-[#060606] text-white">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-[#060606] relative flex flex-col p-10 overflow-hidden">
+<!-- Header Section -->
+<div class="flex justify-between items-start mb-6 z-10">
+<div>
+<h2 class="font-poppins font-bold text-4xl text-white mb-2">
+                    La Fucina: <span class="text-[#FF6200]">Academy Roadmap</span>
+</h2>
+<p class="font-inter text-xl text-gray-400 font-light">
+                    Il percorso di 64 giorni che trasforma un junior in un professionista TIA
+                </p>
+</div>
+<!-- Logo small -->
+<div class="opacity-80">
+<p class="font-poppins font-bold text-sm tracking-wider text-white">TIA <span class="text-[#FF6200]">BLUEPRINT</span></p>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 relative flex flex-col justify-center items-center mt-2">
+<!-- Timeline Horizontal Line -->
+<div class="absolute top-1/2 left-8 right-8 h-1 bg-gray-800 transform -translate-y-1/2 z-0"></div>
+<!-- Timeline Nodes Container - 6 Columns -->
+<div class="w-full grid grid-cols-6 gap-3 z-10 relative h-[450px] items-center px-4">
+<!-- Module 1: OSSERVA -->
+<div class="flex flex-col items-center group h-full justify-center relative">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-xl font-bold text-[#FF6200]">GG 1-5</span>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Metodo TIA</p>
+</div>
+<!-- Node -->
+<div class="w-6 h-6 rounded-full bg-[#060606] border-2 border-[#FF6200] flex items-center justify-center z-20 mb-4 shadow-[0_0_10px_rgba(255,98,0,0.3)]">
+<div class="w-2 h-2 bg-[#FF6200] rounded-full"></div>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel p-3 rounded-lg border-t-2 border-[#FF6200] h-48 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-eye text-[#FF6200] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">OSSERVA</h3>
+</div>
+<p class="font-inter text-xs text-gray-300 leading-snug flex-1">
+                            Introduzione Claude Code, Basi AI Engineering, Prompt &amp; Context pre-configurati.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-gray-400 border-t border-gray-700 pt-1">
+                            Warm-up
+                        </div>
+</div>
+</div>
+<!-- Module 2: IL BLACKOUT (DANGER) -->
+<div class="flex flex-col items-center group h-full justify-center relative transform scale-105 z-30">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-2xl font-bold text-[#F05C00]">GG 6-20</span>
+<p class="text-[10px] text-[#F05C00] uppercase tracking-widest mt-1 font-bold">CRITICAL PHASE</p>
+</div>
+<!-- Node -->
+<div class="w-8 h-8 rounded-full bg-[#421804] border-2 border-[#F05C00] flex items-center justify-center z-20 mb-4 shadow-[0_0_15px_rgba(240,92,0,0.6)]">
+<i class="fas fa-ban text-[#F05C00] text-xs"></i>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel-danger p-3 rounded-lg border-t-4 border-[#F05C00] h-52 flex flex-col shadow-2xl relative">
+<div class="absolute -top-3 -right-3 bg-[#F05C00] text-white text-[10px] font-bold px-2 py-1 rounded">NO AI</div>
+<div class="flex items-center mb-2">
+<i class="fas fa-plug text-[#F05C00] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">IL BLACKOUT</h3>
+</div>
+<p class="font-inter text-xs text-gray-200 leading-snug flex-1 font-medium">
+                            Rimozione TOTALE strumenti AI. Python puro, SQL, Excel.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-[#F05C00] border-t border-[#F05C00] pt-1 font-bold">
+                            "Sbagliare per imparare"
+                        </div>
+</div>
+</div>
+<!-- Module 3: AGISCI -->
+<div class="flex flex-col items-center group h-full justify-center relative">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-xl font-bold text-[#FF6200]">GG 21-35</span>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Re-Integration</p>
+</div>
+<!-- Node -->
+<div class="w-6 h-6 rounded-full bg-[#060606] border-2 border-[#FF6200] flex items-center justify-center z-20 mb-4">
+<div class="w-2 h-2 bg-[#FF6200] rounded-full"></div>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel p-3 rounded-lg border-t-2 border-[#FF6200] h-48 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-bolt text-[#FF6200] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">AGISCI</h3>
+</div>
+<p class="font-inter text-xs text-gray-300 leading-snug flex-1">
+                            Data Engineering AI-Assisted (PySpark, Databricks). L'IA torna x10.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-gray-400 border-t border-gray-700 pt-1">
+                            Amplification
+                        </div>
+</div>
+</div>
+<!-- Module 4: OSSERVA & AGISCI ML -->
+<div class="flex flex-col items-center group h-full justify-center relative">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-xl font-bold text-[#FF6200]">GG 36-45</span>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Deep Dive</p>
+</div>
+<!-- Node -->
+<div class="w-6 h-6 rounded-full bg-[#060606] border-2 border-[#FF6200] flex items-center justify-center z-20 mb-4">
+<div class="w-2 h-2 bg-[#FF6200] rounded-full"></div>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel p-3 rounded-lg border-t-2 border-[#FF6200] h-48 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-brain text-[#FF6200] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">ML &amp; Analysis</h3>
+</div>
+<p class="font-inter text-xs text-gray-300 leading-snug flex-1">
+                            Machine Learning &amp; Analisi Funzionale. Capire il business prima di generare.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-gray-400 border-t border-gray-700 pt-1">
+                            Context Awareness
+                        </div>
+</div>
+</div>
+<!-- Module 5: VALUTA -->
+<div class="flex flex-col items-center group h-full justify-center relative">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-xl font-bold text-[#FF6200]">GG 46-52</span>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Soft Skills</p>
+</div>
+<!-- Node -->
+<div class="w-6 h-6 rounded-full bg-[#060606] border-2 border-[#FF6200] flex items-center justify-center z-20 mb-4">
+<div class="w-2 h-2 bg-[#FF6200] rounded-full"></div>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel p-3 rounded-lg border-t-2 border-[#FF6200] h-48 flex flex-col">
+<div class="flex items-center mb-2">
+<i class="fas fa-check-circle text-[#FF6200] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">VALUTA</h3>
+</div>
+<p class="font-inter text-xs text-gray-300 leading-snug flex-1">
+                            Data Storytelling &amp; PM. Comunicazione, gestione e dashboarding.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-gray-400 border-t border-gray-700 pt-1">
+                            Quality &amp; Defense
+                        </div>
+</div>
+</div>
+<!-- Module 6: FINAL PROJECT -->
+<div class="flex flex-col items-center group h-full justify-center relative">
+<!-- Top: Date -->
+<div class="mb-4 text-center transform transition-transform group-hover:-translate-y-1">
+<span class="font-mono text-xl font-bold text-white">GG 53-64</span>
+<p class="text-[10px] text-[#FF6200] uppercase tracking-widest mt-1 font-bold">GOAL</p>
+</div>
+<!-- Node -->
+<div class="w-8 h-8 rounded-full bg-[#FF6200] shadow-[0_0_15px_rgba(255,98,0,0.6)] flex items-center justify-center z-20 mb-4 animate-pulse">
+<i class="fas fa-flag-checkered text-white text-xs"></i>
+</div>
+<!-- Bottom: Card -->
+<div class="w-full glass-panel p-3 rounded-lg border-t-4 border-white h-48 flex flex-col bg-gradient-to-b from-[#1a1a1a] to-[#060606]">
+<div class="flex items-center mb-2">
+<i class="fas fa-rocket text-[#FF6200] text-lg mr-2"></i>
+<h3 class="font-poppins font-bold text-base text-white">FINAL PROJECT</h3>
+</div>
+<p class="font-inter text-xs text-gray-300 leading-snug flex-1">
+                            Progetto reale, difesa pubblica, peer review.
+                        </p>
+<div class="mt-2 text-[10px] font-mono text-[#FF6200] border-t border-gray-700 pt-1 font-bold">
+                            Delivery
+                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-6 left-12 flex items-center space-x-2">
+<div class="h-1 w-12 bg-gray-800 rounded-full"></div>
+<p class="font-mono text-[10px] text-gray-600">ACADEMY_CURRICULUM_V2.4</p>
+</div>
+<!-- Decorative Grid Background -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-10" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;">
+</div>
+</div>
+</body>
+</html>

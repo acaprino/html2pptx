@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIA Cover Slide</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;family=Roboto+Mono:wght@400;500&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Orange Glow for TIA feel */
+        .tia-glow {
+            filter: drop-shadow(0 0 15px rgba(255, 98, 0, 0.4));
+        }
+        
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 98, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 98, 0, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-black">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-[#060606] text-white flex flex-col relative overflow-hidden">
+<!-- Background decorative elements -->
+<div class="absolute inset-0 bg-grid-pattern opacity-30 z-0 pointer-events-none"></div>
+<!-- Subtle corner accents -->
+<div class="absolute top-0 right-0 w-64 h-64 border-t-2 border-r-2 border-[#FF6200] opacity-20 rounded-tr-3xl"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 border-b-2 border-l-2 border-[#FF6200] opacity-20 rounded-bl-3xl"></div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col justify-center items-center z-10 relative">
+<!-- Logo Graphic (Abstract Network Nodes) -->
+<div class="mb-12 tia-glow transform scale-125">
+<svg fill="none" height="200" viewbox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+<!-- Lines connecting nodes -->
+<path d="M40 60 L100 40 L160 60" stroke="#FF6200" stroke-opacity="0.6" stroke-width="2"></path>
+<path d="M100 40 L100 160" stroke="#FF6200" stroke-opacity="0.6" stroke-width="2"></path>
+<path d="M40 140 L100 160 L160 140" stroke="#FF6200" stroke-opacity="0.6" stroke-width="2"></path>
+<path d="M40 60 L40 140" stroke="#FF6200" stroke-opacity="0.6" stroke-width="2"></path>
+<path d="M160 60 L160 140" stroke="#FF6200" stroke-opacity="0.6" stroke-width="2"></path>
+<!-- Nodes (Circles) -->
+<!-- Top Center -->
+<circle cx="100" cy="40" fill="#060606" r="8" stroke="#FF6200" stroke-width="3"></circle>
+<!-- Top Left -->
+<circle cx="40" cy="60" fill="#060606" r="6" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Top Right -->
+<circle cx="160" cy="60" fill="#060606" r="6" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Center -->
+<circle cx="100" cy="100" fill="#FF6200" opacity="0.9" r="12"></circle>
+<circle cx="100" cy="100" opacity="0.6" r="20" stroke="#FF6200" stroke-dasharray="4 2" stroke-width="1"></circle>
+<!-- Bottom Left -->
+<circle cx="40" cy="140" fill="#060606" r="6" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Bottom Right -->
+<circle cx="160" cy="140" fill="#060606" r="6" stroke="#FFFFFF" stroke-width="2"></circle>
+<!-- Bottom Center -->
+<circle cx="100" cy="160" fill="#060606" r="8" stroke="#FF6200" stroke-width="3"></circle>
+</svg>
+</div>
+<!-- Main Title -->
+<div class="text-center">
+<h1 class="font-poppins font-bold text-8xl tracking-tight leading-none mb-2 text-white">
+<span class="text-white">TIA</span>
+<span class="text-[#FF6200] mx-2 font-light">|</span>
+<span class="text-white">Tri-Tech IA</span>
+</h1>
+</div>
+<!-- Subtitle/Separator -->
+<div class="w-24 h-1 bg-[#FF6200] my-8 rounded-full"></div>
+<!-- Subtitle Text -->
+<div class="text-center max-w-2xl">
+<p class="font-inter font-light text-3xl text-gray-200 tracking-wide uppercase">
+                    Manifesto e Piano Strategico
+                </p>
+<p class="font-inter text-lg text-gray-500 mt-4">
+                    Trasformare il futuro della consulenza IT
+                </p>
+</div>
+</div>
+<!-- Footer Bar -->
+<div class="h-16 border-t border-gray-800 flex justify-between items-center px-12 z-10 bg-[#060606] bg-opacity-90 backdrop-filter backdrop-blur-sm">
+<!-- Left: Technical Status -->
+<div class="flex items-center space-x-4">
+<div class="h-2 w-2 bg-[#FF6200] rounded-full animate-pulse"></div>
+<p class="font-mono text-xs text-[#FF6200] tracking-widest">
+                    v.1.0 // INTERNAL_BLUEPRINT — STATUS: CLASSIFIED_EXECUTION
+                </p>
+</div>
+<!-- Right: Branding -->
+<div class="flex items-center space-x-3 opacity-80">
+<p class="font-poppins font-bold text-sm tracking-wider text-white">TRI-TECH <span class="text-[#FF6200]">SOLUTIONS</span></p>
+</div>
+</div>
+<!-- Decorative tech lines on sides -->
+<div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-[#FF6200] to-transparent opacity-50"></div>
+<div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-[#FF6200] to-transparent opacity-50"></div>
+</div>
+</body>
+</html>

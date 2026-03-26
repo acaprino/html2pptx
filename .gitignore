@@ -1,0 +1,10 @@
+# Generated output
+Slides1.pptx
+Slides1.pdf
+*.partial.pptx
+
+# Temporary screenshots
+_*.png
+
+# Comparison artifacts
+comparison/

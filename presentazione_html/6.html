@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Il Comandamento Zero</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* Tri-Tech Palette */
+        .bg-tri-tech-dark { background-color: #060606; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        /* Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 98, 0, 0.3);
+        }
+        .box-glow {
+            box-shadow: 0 0 30px rgba(255, 98, 0, 0.1);
+        }
+        
+        /* Custom Bracket Styling for Formula */
+        .bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+        }
+        .bracket::before, .bracket::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            border: 2px solid #333;
+            top: 0;
+        }
+        .bracket::before {
+            border-right: none;
+            left: -5px;
+        }
+        .bracket::after {
+            border-left: none;
+            right: -5px;
+        }
+
+        /* Background Grid */
+        .bg-grid {
+            background-image: 
+                linear-gradient(to right, rgba(50, 50, 50, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(50, 50, 50, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-tri-tech-dark text-white">
+<!-- Main Container -->
+<div class="w-[1280px] h-[720px] bg-[#060606] relative flex flex-col p-12 overflow-hidden bg-grid">
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-10">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-white mb-1">
+                    Il Comandamento Zero
+                </h1>
+<p class="font-inter text-xl text-gray-400 font-light">
+                    La regola che precede tutte le altre
+                </p>
+</div>
+<div class="opacity-80 text-right">
+<p class="font-poppins font-bold text-sm tracking-wider text-white">TIA <span class="text-[#FF6200]">PRINCIPLES</span></p>
+<p class="font-mono text-xs text-gray-600 mt-1">CORE_RULESET_00</p>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col justify-center items-center z-10 space-y-12">
+<!-- The Formula -->
+<div class="w-full max-w-5xl bg-[#0a0a0a] border border-gray-800 rounded-2xl p-10 flex flex-col items-center justify-center relative box-glow">
+<!-- Decorative screws/corners -->
+<div class="absolute top-4 left-4 text-gray-700">+</div>
+<div class="absolute top-4 right-4 text-gray-700">+</div>
+<div class="absolute bottom-4 left-4 text-gray-700">+</div>
+<div class="absolute bottom-4 right-4 text-gray-700">+</div>
+<p class="font-mono text-sm text-gray-500 mb-4 tracking-[0.2em] uppercase">Algoritmo Fondamentale</p>
+<div class="font-space font-bold text-6xl tracking-tight text-center leading-snug">
+<span class="text-white">Valore</span>
+<span class="text-gray-600 mx-4">=</span>
+<span class="text-gray-300 border-b-2 border-gray-700 pb-1">Base_Umana</span>
+<span class="text-[#FF6200] mx-4">×</span>
+<span class="text-[#FF6200] glow-text border-b-2 border-[#FF6200] pb-1">IA_Amplificatore</span>
+</div>
+</div>
+<!-- Scenarios Comparison -->
+<div class="w-full max-w-5xl grid grid-cols-2 gap-8">
+<!-- Scenario 0: Base 0 -->
+<div class="bg-[#0c0c0c] border border-gray-800 rounded-xl p-6 flex items-start space-x-4 transition-all duration-300 hover:border-gray-600">
+<div class="mt-1 w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center border border-gray-700 text-gray-500 font-mono font-bold">0</div>
+<div>
+<h3 class="font-space font-bold text-xl text-gray-300 mb-2">Se Base_Umana = 0</h3>
+<p class="font-mono text-lg text-gray-400">
+                            0 <span class="text-[#FF6200]">×</span> 1000 = <span class="text-white font-bold bg-gray-800 px-2 py-0.5 rounded">0</span>
+</p>
+<p class="font-inter text-sm text-gray-500 mt-2">
+                            Non importa quanto sia potente l'IA. Senza fondamento, il risultato è nullo.
+                        </p>
+</div>
+</div>
+<!-- Scenario 1: Base Forte -->
+<div class="bg-[#0c0c0c] border border-[#FF6200] border-opacity-30 rounded-xl p-6 flex items-start space-x-4 transition-all duration-300 hover:border-opacity-100 hover:bg-[#110b05]">
+<div class="mt-1 w-10 h-10 rounded-full bg-[#FF6200] bg-opacity-20 flex items-center justify-center border border-[#FF6200] text-[#FF6200] font-mono font-bold">1</div>
+<div>
+<h3 class="font-space font-bold text-xl text-white mb-2">Se Base_Umana = Forte</h3>
+<p class="font-mono text-lg text-gray-300">
+                            10 <span class="text-[#FF6200]">×</span> 1000 = <span class="text-[#FF6200] font-bold bg-[#FF6200] bg-opacity-10 px-2 py-0.5 rounded border border-[#FF6200] border-opacity-30">10.000</span>
+</p>
+<p class="font-inter text-sm text-gray-400 mt-2">
+                            L'IA agisce come leva esponenziale sulla competenza esistente.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Principle Box -->
+<div class="mt-auto z-20">
+<div class="w-full bg-[#FF6200] text-black p-6 rounded-lg shadow-lg relative overflow-hidden flex items-center justify-between">
+<!-- Background texture for box -->
+<div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 10px 10px;"></div>
+<div class="relative z-10 flex items-center">
+<div class="bg-black text-[#FF6200] p-3 rounded mr-6">
+<i class="fas fa-layer-group text-2xl"></i>
+</div>
+<div>
+<h4 class="font-bold font-poppins text-lg uppercase tracking-wide mb-1">Principio Fondamentale</h4>
+<p class="font-inter font-medium text-base leading-tight max-w-3xl">
+                            L'IA è un <span class="font-bold border-b-2 border-black">amplificatore</span>, MAI una stampella. Mai dipendere totalmente dall'IA. <br/>
+                            Costruisci prima il Mental Model, poi usa l'IA per accelerare.
+                        </p>
+</div>
+</div>
+<div class="relative z-10 opacity-40 font-mono text-6xl font-bold tracking-tighter text-black mix-blend-overlay">
+                    x10
+                </div>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute top-1/2 left-0 w-32 h-64 bg-[#FF6200] opacity-5 filter blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-[#FF6200] opacity-5 filter blur-[120px] pointer-events-none"></div>
+</div>
+</body>
+</html>

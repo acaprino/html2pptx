@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>La Barra Orizzontale</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        body { margin: 0; padding: 0; overflow: hidden; background-color: #FFFFFF; color: #1F2937; }
+        
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        
+        /* Card Styles - Light Theme */
+        .card-base {
+            background-color: #F8F8F8;
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-base:hover {
+            border-color: #D1D5DB;
+            background-color: #F3F4F6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-highlight {
+            background-color: #FFF5F0; /* Very light orange tint */
+            border: 2px solid #FF6200;
+            box-shadow: 0 10px 25px -5px rgba(255, 98, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            margin-bottom: 16px;
+        }
+
+        .icon-box-highlight {
+            background-color: #FFEDD5;
+            border: 1px solid #FF6200;
+            color: #FF6200;
+        }
+        
+        /* Orange accents */
+        .text-orange-tia { color: #FF6200; }
+        .border-orange-tia { border-color: #FF6200; }
+        .bg-orange-tia { background-color: #FF6200; }
+        .text-dark-primary { color: #111827; }
+        .text-dark-secondary { color: #4B5563; }
+        .text-dark-tertiary { color: #9CA3AF; }
+    </style>
+</head>
+<body>
+<div class="w-[1280px] h-[720px] bg-tri-tech-light relative flex flex-col p-12 overflow-hidden">
+<!-- Decorative Grid Background -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E5E5E5" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-dark-primary mb-2">
+                    La Barra Orizzontale: <span class="text-orange-tia">Il Fattore Umano</span>
+</h1>
+<p class="font-inter text-xl text-dark-secondary font-light">
+                    Le competenze che l'IA non può replicare: la Taste Economy
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-dark-tertiary">TIA <span class="text-orange-tia">PROFILE</span></p>
+</div>
+</div>
+<!-- Grid Content -->
+<div class="flex-1 grid grid-cols-2 gap-6 z-10">
+<!-- Card 1: Team Lead / Agentività -->
+<div class="card-base rounded-xl p-6 flex flex-col justify-between group">
+<div>
+<div class="flex justify-between items-start">
+<div class="icon-box group-hover:border-gray-300 transition-colors">
+<i class="fas fa-users-cog text-xl text-gray-500 group-hover:text-gray-700"></i>
+</div>
+<span class="font-mono text-xs text-gray-400 font-bold">01</span>
+</div>
+<h3 class="font-poppins font-bold text-xl text-dark-primary mb-2">Team Lead / Agentività</h3>
+<p class="font-inter text-sm text-dark-secondary leading-relaxed">
+                        Non aspetta istruzioni. Prende decisioni, coordina, risolve.
+                    </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200">
+<p class="font-inter text-xs text-gray-500">
+<span class="text-orange-tia font-bold">IA:</span> Gestisce l'esecuzione<br/>
+<span class="text-dark-primary font-bold">UMANO:</span> Gestisce la direzione
+                    </p>
+</div>
+</div>
+<!-- Card 2: Project Manager -->
+<div class="card-base rounded-xl p-6 flex flex-col justify-between group">
+<div>
+<div class="flex justify-between items-start">
+<div class="icon-box group-hover:border-gray-300 transition-colors">
+<i class="fas fa-tasks text-xl text-gray-500 group-hover:text-gray-700"></i>
+</div>
+<span class="font-mono text-xs text-gray-400 font-bold">02</span>
+</div>
+<h3 class="font-poppins font-bold text-xl text-dark-primary mb-2">Project Manager</h3>
+<p class="font-inter text-sm text-dark-secondary leading-relaxed">
+                        Pianifica, negozia, gestisce stakeholder e aspettative.
+                    </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200">
+<p class="font-inter text-xs text-gray-500">
+<span class="text-orange-tia font-bold">IA:</span> Automatizza il tracking<br/>
+<span class="text-dark-primary font-bold">UMANO:</span> Gestisce relazioni e rischi
+                    </p>
+</div>
+</div>
+<!-- Card 3: Analista Funzionale -->
+<div class="card-base rounded-xl p-6 flex flex-col justify-between group">
+<div>
+<div class="flex justify-between items-start">
+<div class="icon-box group-hover:border-gray-300 transition-colors">
+<i class="fas fa-search-dollar text-xl text-gray-500 group-hover:text-gray-700"></i>
+</div>
+<span class="font-mono text-xs text-gray-400 font-bold">03</span>
+</div>
+<h3 class="font-poppins font-bold text-xl text-dark-primary mb-2">Analista Funzionale</h3>
+<p class="font-inter text-sm text-dark-secondary leading-relaxed">
+                        Traduce il bisogno del cliente in specifiche tecniche precise.
+                    </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200">
+<p class="font-inter text-xs text-gray-500">
+<span class="text-orange-tia font-bold">IA:</span> Scrive codice<br/>
+<span class="text-dark-primary font-bold">UMANO:</span> Capisce il "perché" del business
+                    </p>
+</div>
+</div>
+<!-- Card 4: Il Gusto (Highlighted) -->
+<div class="card-highlight rounded-xl p-6 flex flex-col justify-between">
+<!-- Inner Decoration -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500 rounded-full opacity-5 filter blur-2xl pointer-events-none"></div>
+<div>
+<div class="flex justify-between items-start relative z-10">
+<div class="icon-box icon-box-highlight shadow-sm">
+<i class="fas fa-gem text-xl text-orange-tia"></i>
+</div>
+<span class="font-mono text-xs text-orange-tia font-bold tracking-wider">04 // CORE VALUE</span>
+</div>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-2 relative z-10">Il Gusto (Taste Economy)</h3>
+<p class="font-inter text-sm text-gray-700 leading-relaxed relative z-10">
+                        Saper distinguere una soluzione elegante da una che "funziona e basta". UX, architettura pulita, naming, documentazione.
+                    </p>
+</div>
+<div class="mt-4 pt-4 border-t border-orange-200 relative z-10">
+<p class="font-inter text-xs text-gray-600">
+<span class="text-orange-tia font-bold uppercase text-[10px] tracking-widest block mb-1">Il Nuovo Lusso</span>
+<span class="text-gray-900 font-medium">La capacità di giudizio estetico e funzionale diventa la skill premium.</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 left-12 flex items-center space-x-2">
+<div class="h-1 w-12 bg-orange-tia rounded-full"></div>
+<p class="font-mono text-[10px] text-gray-400">HUMAN_FACTOR_MATRIX</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Il Professionista T-Shaped</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        /* Light Theme Cards */
+        .light-card {
+            background-color: #F8F8F8;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .light-card:hover {
+            border-color: #FF6200;
+            box-shadow: 0 4px 12px rgba(255, 98, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .vertical-card-light {
+            background-color: #FFFFFF;
+            border: 2px solid #FF6200;
+            box-shadow: 0 10px 25px rgba(255, 98, 0, 0.1);
+        }
+
+        .glow-orange-light {
+            box-shadow: 0 0 20px rgba(255, 98, 0, 0.2);
+        }
+
+        /* Connecting lines for the T-Shape */
+        .connector-line {
+            position: absolute;
+            z-index: 0;
+            border-left: 2px dashed #CBD5E1; /* slate-300 */
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-6 z-20">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-1">
+                    Il Nuovo Standard: <span class="text-tri-tech-orange">Il Professionista T-Shaped</span>
+</h1>
+<p class="font-inter text-xl text-gray-600 font-light">
+                    Specializzazione verticale + Ampiezza orizzontale
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">MODEL</span></p>
+</div>
+</div>
+<!-- Main Content Area: T-Shape Diagram -->
+<div class="flex-1 relative flex flex-col items-center justify-start pt-2 z-10">
+<!-- Horizontal Bar (Ampiezza) Label -->
+<div class="w-full flex justify-between items-end mb-3 px-4">
+<div class="flex items-center space-x-2">
+<i class="fas fa-arrows-left-right text-gray-400"></i>
+<p class="font-mono text-sm text-gray-500 uppercase tracking-widest">Ampiezza Orizzontale (6 Assi)</p>
+</div>
+<div class="flex items-center space-x-2">
+<span class="px-2 py-1 bg-orange-50 rounded text-xs text-tri-tech-orange font-bold font-mono border border-orange-100">VALORE: AGENTIVITÀ</span>
+<span class="px-2 py-1 bg-orange-50 rounded text-xs text-tri-tech-orange font-bold font-mono border border-orange-100">VALORE: GUSTO</span>
+</div>
+</div>
+<!-- Horizontal Bar Container -->
+<div class="w-full grid grid-cols-6 gap-4 mb-2">
+<!-- 1. Team Lead -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">1</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-gray-800">Team Lead</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Agentività &amp; Decisione</p>
+</div>
+<!-- 2. Project Manager -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">2</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-gray-800">Project Manager</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Pianificazione &amp; Rischi</p>
+</div>
+<!-- 3. Analista Funzionale -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">3</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-gray-800">Analista Funzionale</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Traduzione Business</p>
+</div>
+<!-- 4. Sviluppare con Gusto -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group relative overflow-hidden ring-1 ring-orange-200 bg-orange-50/30">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">4</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-[#FF6200]">Sviluppare con Gusto</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Eleganza &amp; UX</p>
+</div>
+<!-- 5. Base Tecnica -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">5</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-gray-800">Base Tecnica</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Struttura &amp; Clean Code</p>
+</div>
+<!-- 6. Ingegneria AI -->
+<div class="light-card p-4 rounded-lg flex flex-col items-center text-center h-36 justify-between group">
+<div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-tri-tech-orange font-bold mb-2 group-hover:bg-[#FF6200] group-hover:text-white group-hover:border-[#FF6200] transition-colors shadow-sm">6</div>
+<p class="font-poppins font-semibold text-sm leading-tight text-gray-800">Ingegneria dell'IA</p>
+<p class="font-inter text-[11px] text-gray-500 mt-1">Prompt &amp; Agents</p>
+</div>
+</div>
+<!-- Vertical Bar (Specializzazione) -->
+<div class="flex-1 w-full flex justify-center relative">
+<div class="w-1/3 h-full flex flex-col">
+<!-- Connector Neck -->
+<div class="w-full h-8 flex justify-center items-center relative">
+<div class="h-full w-px bg-orange-400"></div>
+</div>
+<!-- Vertical Deep Card -->
+<div class="vertical-card-light flex-1 rounded-xl p-6 relative flex flex-col items-center justify-start text-center glow-orange-light">
+<div class="absolute -left-12 top-1/2 transform -translate-y-1/2 -rotate-90">
+<p class="font-mono text-sm text-gray-400 uppercase tracking-widest whitespace-nowrap font-bold">
+<i class="fas fa-arrows-up-down mr-2 text-[#FF6200]"></i>Specializzazione Verticale
+                            </p>
+</div>
+<div class="w-16 h-16 rounded-full bg-white border-2 border-[#FF6200] flex items-center justify-center mb-4 shadow-md text-[#FF6200]">
+<i class="fas fa-anchor text-3xl"></i>
+</div>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-2">L'Ancora di Salvezza</h3>
+<div class="h-1 w-16 bg-[#FF6200] rounded-full mb-4"></div>
+<div class="font-inter text-gray-600 mb-6 px-4">
+<p class="mb-2">Padronanza profonda di <strong class="text-gray-900">1-2 domini tecnici</strong>.</p>
+<p class="text-sm">Senza questa profondità, l'IA non ha nulla da amplificare.</p>
+</div>
+<!-- Domain Examples -->
+<div class="w-full grid grid-cols-2 gap-3 mt-auto">
+<div class="bg-gray-100 p-2 rounded border border-gray-200">
+<p class="font-mono text-xs text-gray-600 font-bold">BACKEND</p>
+</div>
+<div class="bg-gray-100 p-2 rounded border border-gray-200">
+<p class="font-mono text-xs text-gray-600 font-bold">DATA &amp; CLOUD</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="absolute bottom-6 right-12 text-right">
+<p class="font-mono text-xs text-gray-400">
+                PROFILO_COMPETENZE_TIA_V1.0
+            </p>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute left-0 bottom-0 w-32 h-32 border-l-2 border-b-2 border-orange-500/10 rounded-bl-3xl pointer-events-none"></div>
+<div class="absolute right-0 top-20 w-32 h-32 border-r-2 border-t-2 border-orange-500/10 rounded-tr-3xl pointer-events-none"></div>
+</div>
+</body>
+</html>

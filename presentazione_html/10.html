@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>L'Ingegneria dell'IA</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Box Styles - Light Theme */
+        .tech-box {
+            background-color: #F8F9FA;
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .tech-box:hover {
+            border-color: #FF6200;
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(255, 98, 0, 0.15);
+            transform: translateX(5px);
+            z-index: 10;
+        }
+
+        .level-number {
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        /* Custom Arrow Styling */
+        .arrow-line {
+            stroke-dasharray: 10;
+            animation: dash 30s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Background Pattern (Subtle Dot Grid) -->
+<div class="absolute inset-0 z-0 opacity-30 pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="20" id="dotPattern" patternunits="userSpaceOnUse" width="20">
+<circle cx="2" cy="2" fill="#E5E7EB" r="1"></circle>
+</pattern>
+</defs>
+<rect fill="url(#dotPattern)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Header -->
+<div class="flex justify-between items-start mb-6 z-20 relative border-b border-gray-100 pb-4">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-1">
+                    L'Ingegneria dell'IA: <span class="text-[#FF6200]">Il Modello RAM/CPU</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    4 livelli di competenza progressivi per il consulente del futuro
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">FRAMEWORK</span></p>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-row items-stretch z-10 gap-12 mt-2">
+<!-- Left Column: The Arrow & Context -->
+<div class="w-1/4 flex flex-col justify-between items-center py-4 relative">
+<!-- Top Label -->
+<div class="text-center">
+<p class="font-mono text-[#FF6200] font-bold text-lg uppercase tracking-widest">Autonomia</p>
+<p class="font-inter text-gray-500 text-sm">Alta Complessità</p>
+</div>
+<!-- The Arrow Graphic -->
+<div class="flex-1 w-full flex justify-center py-4 relative">
+<svg class="h-full w-20 overflow-visible" viewbox="0 0 40 400">
+<!-- Arrow Shaft -->
+<line stroke="#E5E7EB" stroke-width="4" x1="20" x2="20" y1="390" y2="20"></line>
+<line class="arrow-line" opacity="1" stroke="#FF6200" stroke-width="2" x1="20" x2="20" y1="390" y2="20"></line>
+<!-- Arrow Head -->
+<path d="M10 30 L20 10 L30 30" fill="none" stroke="#FF6200" stroke-width="3"></path>
+<!-- Connecting Dots -->
+<circle cx="20" cy="350" fill="#FFF" r="5" stroke="#D1D5DB" stroke-width="2"></circle>
+<circle cx="20" cy="240" fill="#FFF" r="5" stroke="#D1D5DB" stroke-width="2"></circle>
+<circle cx="20" cy="130" fill="#FFF" r="5" stroke="#D1D5DB" stroke-width="2"></circle>
+<circle cx="20" cy="50" fill="#FF6200" r="5"></circle>
+</svg>
+</div>
+<!-- Bottom Label -->
+<div class="text-center">
+<p class="font-inter text-gray-500 text-sm">Bassa Complessità</p>
+<p class="font-mono text-gray-400 font-bold text-lg uppercase tracking-widest">Esecuzione</p>
+</div>
+</div>
+<!-- Right Column: The Stack -->
+<div class="w-3/4 flex flex-col justify-between gap-4 py-2">
+<!-- Level 4: Agentic Engineering -->
+<div class="tech-box flex-1 rounded-r-xl rounded-l-md flex items-center p-6 relative group overflow-hidden border-l-4 border-l-[#FF6200]">
+<div class="mr-8 flex-shrink-0 text-center w-16">
+<span class="block font-mono text-4xl font-bold text-[#FF6200] level-number">L4</span>
+<i class="fas fa-network-wired text-gray-400 mt-2 text-xl group-hover:text-[#FF6200] transition-colors"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-poppins font-bold text-2xl text-gray-900 group-hover:text-[#FF6200] transition-colors">Agentic Engineering</h3>
+<span class="font-mono text-xs text-[#FF6200] border border-[#FF6200] bg-orange-50 px-2 py-0.5 rounded">IL SISTEMA AUTONOMO</span>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-relaxed">
+                            Orchestrare più agenti, gestire stato, errori, retry e <strong>Human-in-the-Loop</strong>. Sistemi complessi che lavorano in autonomia per raggiungere un obiettivo.
+                        </p>
+</div>
+</div>
+<!-- Level 3: Design Patterns -->
+<div class="tech-box flex-1 rounded-r-xl rounded-l-md flex items-center p-6 relative group border-l-4 border-l-[#CC4E00]">
+<div class="mr-8 flex-shrink-0 text-center w-16">
+<span class="block font-mono text-4xl font-bold text-[#CC4E00] level-number opacity-90">L3</span>
+<i class="fas fa-cogs text-gray-400 mt-2 text-xl group-hover:text-[#CC4E00] transition-colors"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-poppins font-bold text-2xl text-gray-900 group-hover:text-[#CC4E00] transition-colors">Agentic Design Patterns</h3>
+<span class="font-mono text-xs text-gray-500 border border-gray-300 px-2 py-0.5 rounded">RAGIONAMENTO</span>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-relaxed">
+                            Patterns ricorrenti per sistemi multi-step: <strong>ReAct</strong>, <strong>Chain of Thought</strong>, Tool Use, Planning. Il modello non solo risponde, ma ragiona e agisce.
+                        </p>
+</div>
+</div>
+<!-- Level 2: Context Engineering -->
+<div class="tech-box flex-1 rounded-r-xl rounded-l-md flex items-center p-6 relative group border-l-4 border-l-[#993A00]">
+<div class="mr-8 flex-shrink-0 text-center w-16">
+<span class="block font-mono text-4xl font-bold text-[#993A00] level-number opacity-80">L2</span>
+<i class="fas fa-memory text-gray-400 mt-2 text-xl group-hover:text-[#993A00] transition-colors"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-poppins font-bold text-2xl text-gray-900 group-hover:text-[#993A00] transition-colors">Context Engineering</h3>
+<span class="font-mono text-xs text-gray-500 border border-gray-300 px-2 py-0.5 rounded">LA RAM</span>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-relaxed">
+                            Gestire il contesto: cosa sa il modello, cosa ricorda. <strong>System prompts</strong>, few-shot learning, retrieval strutturato. Definire la memoria di lavoro.
+                        </p>
+</div>
+</div>
+<!-- Level 1: Prompt Engineering -->
+<div class="tech-box flex-1 rounded-r-xl rounded-l-md flex items-center p-6 relative group border-l-4 border-l-[#662600]">
+<div class="mr-8 flex-shrink-0 text-center w-16">
+<span class="block font-mono text-4xl font-bold text-[#662600] level-number opacity-60">L1</span>
+<i class="fas fa-terminal text-gray-400 mt-2 text-xl group-hover:text-[#662600] transition-colors"></i>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-poppins font-bold text-2xl text-gray-900 group-hover:text-[#662600] transition-colors">Prompt Engineering</h3>
+<span class="font-mono text-xs text-gray-500 border border-gray-300 px-2 py-0.5 rounded">LA FUNZIONE</span>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-relaxed">
+                            Scrivere prompt efficaci. <strong>Input → Output</strong>. Singola interazione ottimizzata per ottenere il risultato desiderato.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 left-12 flex items-center space-x-2">
+<div class="h-1 w-12 bg-[#FF6200] rounded-full"></div>
+<p class="font-mono text-[10px] text-gray-400">AI_ENGINEERING_STACK_V1.0</p>
+</div>
+</div>
+</body>
+</html>

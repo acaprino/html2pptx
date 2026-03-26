@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>La Trappola dell'IA</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Effects */
+        .danger-shadow {
+            box-shadow: 0 4px 20px rgba(240, 92, 0, 0.1);
+        }
+        
+        /* Diagonal Stripe Pattern for Risk Feel (Light Version) */
+        .stripe-bg {
+            background-color: #FFF5F0;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F05C00' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-10">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                    La Trappola dell'IA: <span class="text-[#F05C00]">L'Illusione di Competenza</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    I due rischi che nessuno vuole vedere.
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#F05C00]">RISK_ASSESSMENT</span></p>
+</div>
+</div>
+<!-- Main Content: Two Risk Boxes -->
+<div class="flex-1 flex gap-10 z-10 pb-6">
+<!-- Box 1: VIBE CODING -->
+<div class="flex-1 stripe-bg border-2 border-[#F05C00] rounded-xl relative overflow-hidden flex flex-col danger-shadow group transition-transform transform hover:-translate-y-1">
+<!-- Top Status Bar -->
+<div class="h-12 border-b border-[#F05C00] border-opacity-30 bg-[#FFE4D6] flex items-center justify-between px-6">
+<span class="font-mono text-xs text-[#F05C00] font-bold uppercase tracking-widest"><i class="fas fa-circle text-[8px] mr-2 animate-pulse"></i>Risk Detected</span>
+<span class="font-mono text-xs text-gray-500">ID: RISK_01</span>
+</div>
+<div class="p-8 flex flex-col h-full relative z-10">
+<!-- Giant Watermark Icon -->
+<div class="absolute bottom-[-20px] right-[-20px] text-[#F05C00] opacity-5 text-9xl pointer-events-none transform rotate-12">
+<i class="fas fa-skull"></i>
+</div>
+<div class="flex items-start mb-6">
+<div class="w-16 h-16 rounded-lg bg-white border border-[#F05C00] flex items-center justify-center mr-5 shrink-0 shadow-sm">
+<i class="fas fa-skull-crossbones text-3xl text-[#F05C00]"></i>
+</div>
+<div>
+<h2 class="font-poppins font-bold text-3xl text-gray-900 uppercase tracking-wider leading-none">Vibe Coding</h2>
+<div class="w-12 h-1 bg-[#F05C00] mt-3"></div>
+</div>
+</div>
+<div class="flex-1 flex flex-col">
+<!-- Terminal Block (Keep dark for contrast) -->
+<div class="bg-[#1E1E1E] border-l-4 border-gray-600 p-4 mb-5 font-mono text-sm text-gray-300 rounded-r shadow-inner">
+<p>&gt; Generating code... <span class="text-green-400">Done</span></p>
+<p>&gt; Understanding logic... <span class="text-red-400">Failed</span></p>
+<p>&gt; Deploying to Prod... <span class="text-yellow-400">FATAL_ERROR</span></p>
+</div>
+<p class="font-inter text-lg text-gray-700 leading-relaxed mb-4">
+                            Generare codice che "funziona" senza comprenderlo. Il bug arriva alle 3:00 AM in produzione.
+                        </p>
+<div class="mt-auto pt-4 border-t border-[#F05C00] border-opacity-20">
+<p class="font-poppins font-bold text-xl text-gray-900">
+<i class="fas fa-exclamation-triangle text-[#F05C00] mr-2"></i> Il consulente è nudo.
+                            </p>
+<p class="font-inter text-sm text-gray-500 mt-1 pl-8">Nessuno sa dove mettere le mani.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Box 2: TOKEN FATIGUE -->
+<div class="flex-1 stripe-bg border-2 border-[#F05C00] rounded-xl relative overflow-hidden flex flex-col danger-shadow group transition-transform transform hover:-translate-y-1">
+<!-- Top Status Bar -->
+<div class="h-12 border-b border-[#F05C00] border-opacity-30 bg-[#FFE4D6] flex items-center justify-between px-6">
+<span class="font-mono text-xs text-[#F05C00] font-bold uppercase tracking-widest"><i class="fas fa-circle text-[8px] mr-2 animate-pulse"></i>Risk Detected</span>
+<span class="font-mono text-xs text-gray-500">ID: RISK_02</span>
+</div>
+<div class="p-8 flex flex-col h-full relative z-10">
+<!-- Giant Watermark Icon -->
+<div class="absolute bottom-[-20px] right-[-20px] text-[#F05C00] opacity-5 text-9xl pointer-events-none transform -rotate-12">
+<i class="fas fa-brain"></i>
+</div>
+<div class="flex items-start mb-6">
+<div class="w-16 h-16 rounded-lg bg-white border border-[#F05C00] flex items-center justify-center mr-5 shrink-0 shadow-sm">
+<i class="fas fa-battery-quarter text-3xl text-[#F05C00]"></i>
+</div>
+<div>
+<h2 class="font-poppins font-bold text-3xl text-gray-900 uppercase tracking-wider leading-none">Token Fatigue</h2>
+<div class="w-12 h-1 bg-[#F05C00] mt-3"></div>
+</div>
+</div>
+<div class="flex-1 flex flex-col">
+<!-- Terminal Block -->
+<div class="bg-[#1E1E1E] border-l-4 border-gray-600 p-4 mb-5 font-mono text-sm text-gray-300 rounded-r shadow-inner">
+<p>&gt; User: Fix this bug...</p>
+<p>&gt; System: Processing...</p>
+<p>&gt; <span class="text-gray-500">... [Context Limit Exceeded]</span></p>
+<p>&gt; Output: Hallucinated code.</p>
+</div>
+<p class="font-inter text-lg text-gray-700 leading-relaxed mb-4">
+                            Perdita progressiva del contesto. Il prompt si allunga, la qualità degrada, l'architettura si perde.
+                        </p>
+<div class="mt-auto pt-4 border-t border-[#F05C00] border-opacity-20">
+<p class="font-poppins font-bold text-xl text-gray-900">
+<i class="fas fa-exclamation-triangle text-[#F05C00] mr-2"></i> Rattoppare, non costruire.
+                            </p>
+<p class="font-inter text-sm text-gray-500 mt-1 pl-8">Modello mentale compromesso.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Warning Box -->
+<div class="bg-[#FFF0E6] border border-[#F05C00] rounded p-4 flex items-center justify-center shadow-sm">
+<i class="fas fa-triangle-exclamation text-[#F05C00] text-xl mr-4"></i>
+<p class="font-inter text-gray-700">
+<span class="font-bold text-[#F05C00]">Warning:</span> Usare l'IA senza capire cosa si sta facendo è peggio che non usarla.
+            </p>
+</div>
+</div>
+</body>
+</html>
