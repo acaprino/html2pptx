@@ -236,7 +236,10 @@ JS = r"""() => {
 
         // Detect circular elements (border-radius >= 40% of min dimension, roughly square)
         var minDim = Math.min(rect.w, rect.h);
-        var br_val = parseFloat(cs.borderTopLeftRadius) || 0;
+        var br_raw = cs.borderTopLeftRadius;
+        var br_val = parseFloat(br_raw) || 0;
+        // Convert percentage border-radius to pixels (50% on a 420px element = 210px)
+        if (br_raw.indexOf('%') >= 0) br_val = (br_val / 100) * minDim;
         var isCircle = (br_val >= minDim * 0.4) && (minDim > 20) &&
                        (Math.max(rect.w, rect.h) / minDim < 1.5);
 
