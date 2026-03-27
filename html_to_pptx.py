@@ -44,6 +44,33 @@ TAILWIND_CDN = '<script src="https://cdn.tailwindcss.com/3.4.17?plugins=forms,ty
 # Setting min-height:0 allows flex items to actually shrink to fit their parent.
 FLEX_FIX_CSS = '<style>.flex-1{min-height:0!important;min-width:0!important;}</style>'
 
+# ── CSS simplification levels (cumulative, 0-10) ─────────────────────
+# Each tuple: (threshold, css_rules). Applied when --simplify >= threshold.
+# Level 0 = original (no changes), level 10 = maximum simplification.
+SIMPLIFY_LEVELS = [
+    # 1+: Kill animations and transitions (static snapshot anyway)
+    (1, "*, *::before, *::after { animation: none !important; transition: none !important; "
+        "animation-duration: 0s !important; }"),
+    # 3+: Remove shadows (not supported in PPTX)
+    (3, "* { box-shadow: none !important; text-shadow: none !important; }"),
+    # 5+: Remove filters and backdrop effects
+    (5, "* { filter: none !important; backdrop-filter: none !important; "
+        "-webkit-backdrop-filter: none !important; }"),
+    # 7+: Flatten gradients — removes background-image (keeps solid background-color)
+    (7, "* { background-image: none !important; }"),
+    # 9+: Strip decorative outlines and reduce visual noise
+    (9, "* { outline: none !important; } "
+        "*::before, *::after { content: none !important; }"),
+]
+
+
+def _simplify_css(level):
+    """Generate <style> tag with CSS overrides for the given simplification level."""
+    if level <= 0:
+        return ""
+    rules = [css for threshold, css in SIMPLIFY_LEVELS if level >= threshold]
+    return "<style>" + "\n".join(rules) + "</style>"
+
 
 def px(v):
     """CSS pixels to EMU."""
@@ -492,6 +519,18 @@ JS = r"""() => {
 
 # ── Screenshot SVGs and Font Awesome icons ───────────────────────────
 
+def _screenshot_with_isolation(page, selector, path):
+    """Screenshot an element after hiding all non-ancestor siblings (try/finally)."""
+    page.evaluate(HIDE_FOR_SCREENSHOT_JS, selector)
+    try:
+        page.locator(selector).first.screenshot(path=path)
+    finally:
+        try:
+            page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
+        except Exception:
+            pass
+
+
 def screenshot_elements(page, data, tmpdir):
     imgs = []
     for svg in data.get('svgs', []):
@@ -501,35 +540,19 @@ def screenshot_elements(page, data, tmpdir):
             continue
         si = int(svg['i'])
         p = os.path.join(tmpdir, f"svg_{si}.png")
-        loc = page.locator(f'[data-si="{si}"]')
-        if loc.count() > 0:
-            try:
-                page.evaluate(HIDE_FOR_SCREENSHOT_JS, f'[data-si="{si}"]')
-                loc.first.screenshot(path=p)
-                page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
-                imgs.append({**svg, 'path': p})
-            except Exception as e:
-                try:
-                    page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
-                except Exception:
-                    pass
-                print(f"  WARN: screenshot failed for svg {si}: {e}", file=sys.stderr)
+        try:
+            _screenshot_with_isolation(page, f'[data-si="{si}"]', p)
+            imgs.append({**svg, 'path': p})
+        except Exception as e:
+            print(f"  WARN: screenshot failed for svg {si}: {e}", file=sys.stderr)
     for icon in data.get('icons', []):
         fi = int(icon['i'])
         p = os.path.join(tmpdir, f"fa_{fi}.png")
-        loc = page.locator(f'[data-fi="{fi}"]')
-        if loc.count() > 0:
-            try:
-                page.evaluate(HIDE_FOR_SCREENSHOT_JS, f'[data-fi="{fi}"]')
-                loc.first.screenshot(path=p)
-                page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
-                imgs.append({**icon, 'path': p})
-            except Exception as e:
-                try:
-                    page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
-                except Exception:
-                    pass
-                print(f"  WARN: screenshot failed for icon {fi}: {e}", file=sys.stderr)
+        try:
+            _screenshot_with_isolation(page, f'[data-fi="{fi}"]', p)
+            imgs.append({**icon, 'path': p})
+        except Exception as e:
+            print(f"  WARN: screenshot failed for icon {fi}: {e}", file=sys.stderr)
     return imgs
 
 
@@ -804,6 +827,12 @@ def main():
                         help='Viewport width in pixels (default: %(default)s)')
     parser.add_argument('--height', type=int, default=VP_H,
                         help='Viewport height in pixels (default: %(default)s)')
+    parser.add_argument('-s', '--simplify', type=int, default=0, choices=range(0, 11),
+                        metavar='0-10',
+                        help='CSS simplification level (default: 0). '
+                             '0=original, 1-2=no animations, 3-4=+no shadows, '
+                             '5-6=+no filters, 7-8=+no bg-images/gradients, '
+                             '9-10=+no outlines/pseudo-elements (removes ::before/::after incl. FA icons)')
     args = parser.parse_args()
 
     html_dir = Path(args.input)
@@ -823,6 +852,12 @@ def main():
         print(f"No HTML files found in {html_dir}")
         return
 
+    simp = args.simplify
+    simp_label = {0: 'off', 1: 'light', 2: 'light', 3: 'medium', 4: 'medium',
+                  5: 'medium-high', 6: 'medium-high', 7: 'heavy', 8: 'heavy',
+                  9: 'maximum', 10: 'maximum'}.get(simp, f'level {simp}')
+    if simp > 0:
+        print(f"CSS simplification: {simp}/10 ({simp_label})")
     print(f"Converting {len(files)} HTML slides -> PPTX (native elements)\n")
     prs = Presentation()
     prs.slide_width = SLIDE_W
@@ -848,8 +883,14 @@ def main():
                         TAILWIND_CDN,
                         html_content
                     )
-                    # Inject flex overflow fix (min-height:0 on flex-1 items)
-                    patched = patched.replace('</head>', FLEX_FIX_CSS + '</head>')
+                    # Inject flex overflow fix + optional CSS simplification
+                    inject = FLEX_FIX_CSS + _simplify_css(args.simplify)
+                    if '</head>' in patched:
+                        patched = patched.replace('</head>', inject + '</head>')
+                    elif '<body' in patched:
+                        patched = patched.replace('<body', inject + '<body', 1)
+                    else:
+                        print(f"  WARN: no </head> or <body> tag, CSS overrides not injected", file=sys.stderr)
                     temp_html = Path(tmpdir) / f"slide_{idx}.html"
                     temp_html.write_text(patched, encoding='utf-8')
 
