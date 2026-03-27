@@ -159,42 +159,81 @@ JS = r"""() => {
             return;
         }
 
+        // Detect circular elements (border-radius >= 40% of min dimension, roughly square)
+        var br_val = parseFloat(cs.borderTopLeftRadius) || 0;
+        var minDim = Math.min(rect.w, rect.h);
+        var isCircle = (br_val >= minDim * 0.4) && (minDim > 20) &&
+                       (Math.max(rect.w, rect.h) / minDim < 1.5);
+
         // Background shape (non-transparent bg color)
         var bg = cs.backgroundColor;
+        var pushedBgShape = false;
         if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-            out.shapes.push({
+            var shapeEntry = {
                 x: rect.x, y: rect.y, w: rect.w, h: rect.h,
                 dp: dp, seq: seq++, bg: bg, op: parseFloat(cs.opacity),
-                br: parseInt(cs.borderRadius) || 0
-            });
+                br: br_val
+            };
+            if (isCircle) shapeEntry.circ = true;
+            out.shapes.push(shapeEntry);
+            pushedBgShape = true;
         }
 
-        // Colored borders >= 1px (table separators, accent bars, card borders)
-        // dp + 0.5 places borders between parent (dp) and child (dp+1) depth
-        var borderDefs = [
-            ['Top',    function(r, bw) { return {x:r.x, y:r.y, w:r.w, h:bw}; }],
-            ['Bottom', function(r, bw) { return {x:r.x, y:r.y+r.h-bw, w:r.w, h:bw}; }],
-            ['Left',   function(r, bw) { return {x:r.x, y:r.y, w:bw, h:r.h}; }],
-            ['Right',  function(r, bw) { return {x:r.x+r.w-bw, y:r.y, w:bw, h:r.h}; }]
-        ];
-        for (var bi = 0; bi < borderDefs.length; bi++) {
-            var prop = borderDefs[bi][0];
-            var mkR = borderDefs[bi][1];
-            var bw = parseFloat(cs['border' + prop + 'Width']);
-            var bs = cs['border' + prop + 'Style'];
-            var bc = cs['border' + prop + 'Color'];
-            if (bw >= 1 && bs !== 'none' && bc && bc !== 'rgba(0, 0, 0, 0)') {
-                var sr = mkR(rect, bw);
-                out.shapes.push({
-                    x: sr.x, y: sr.y, w: sr.w, h: sr.h,
-                    dp: dp + 0.5, seq: seq++, bg: bc, op: parseFloat(cs.opacity), br: 0
-                });
+        // Borders: circular elements get oval outline, others get rectangular borders
+        if (isCircle) {
+            // Check all 4 sides, use largest width + first non-transparent color
+            var circBw = 0, circBc = null;
+            var sides = ['Top','Right','Bottom','Left'];
+            for (var si = 0; si < sides.length; si++) {
+                var sd = sides[si];
+                var sbw = parseFloat(cs['border' + sd + 'Width']);
+                var sbs = cs['border' + sd + 'Style'];
+                var sbc = cs['border' + sd + 'Color'];
+                if (sbw >= 1 && sbs !== 'none' && sbc && sbc !== 'rgba(0, 0, 0, 0)') {
+                    if (sbw > circBw) circBw = sbw;
+                    if (!circBc) circBc = sbc;
+                }
+            }
+            if (circBw >= 1 && circBc) {
+                if (pushedBgShape) {
+                    out.shapes[out.shapes.length - 1].bco = circBc;
+                    out.shapes[out.shapes.length - 1].bw = circBw;
+                } else {
+                    out.shapes.push({
+                        x: rect.x, y: rect.y, w: rect.w, h: rect.h,
+                        dp: dp, seq: seq++, bg: 'rgba(0, 0, 0, 0)', op: parseFloat(cs.opacity),
+                        circ: true, bco: circBc, bw: circBw
+                    });
+                }
+            }
+        } else {
+            // Colored borders >= 1px (table separators, accent bars, card borders)
+            // dp + 0.5 places borders between parent (dp) and child (dp+1) depth
+            var borderDefs = [
+                ['Top',    function(r, bw) { return {x:r.x, y:r.y, w:r.w, h:bw}; }],
+                ['Bottom', function(r, bw) { return {x:r.x, y:r.y+r.h-bw, w:r.w, h:bw}; }],
+                ['Left',   function(r, bw) { return {x:r.x, y:r.y, w:bw, h:r.h}; }],
+                ['Right',  function(r, bw) { return {x:r.x+r.w-bw, y:r.y, w:bw, h:r.h}; }]
+            ];
+            for (var bi = 0; bi < borderDefs.length; bi++) {
+                var prop = borderDefs[bi][0];
+                var mkR = borderDefs[bi][1];
+                var bw = parseFloat(cs['border' + prop + 'Width']);
+                var bs = cs['border' + prop + 'Style'];
+                var bc = cs['border' + prop + 'Color'];
+                if (bw >= 1 && bs !== 'none' && bc && bc !== 'rgba(0, 0, 0, 0)') {
+                    var sr = mkR(rect, bw);
+                    out.shapes.push({
+                        x: sr.x, y: sr.y, w: sr.w, h: sr.h,
+                        dp: dp + 0.5, seq: seq++, bg: bc, op: parseFloat(cs.opacity), br: 0
+                    });
+                }
             }
         }
 
         // Collect text runs with PRECISE bounding rects via Range API
         var runs = [];
-        var tMinX = 9999, tMinY = 9999, tMaxX = 0, tMaxY = 0;
+        var tMinX = Infinity, tMinY = Infinity, tMaxX = -Infinity, tMaxY = -Infinity;
         var hasTB = false;
         var childNodes = el.childNodes;
         for (var ci = 0; ci < childNodes.length; ci++) {
@@ -446,16 +485,45 @@ def _add_shape(slide, s):
     if w < 5 and h < 5:
         return
     c = parse_rgba(s['bg'])
-    if not c:
+    has_border = parse_rgba(s.get('bco')) is not None
+    has_visible_fill = c is not None and (s.get('op', 1.0) * c[3]) >= 0.15
+    # Skip shapes that have neither visible fill nor border outline
+    if not has_visible_fill and not has_border:
         return
-    effective_opacity = s.get('op', 1.0) * c[3]
-    if effective_opacity < 0.15:
-        return
-    shape_type = MSO_SHAPE.ROUNDED_RECTANGLE if s.get('br', 0) > 4 else MSO_SHAPE.RECTANGLE
+    # Circular elements -> OVAL, large border-radius -> ROUNDED_RECTANGLE, else RECTANGLE
+    if s.get('circ', False):
+        shape_type = MSO_SHAPE.OVAL
+    elif s.get('br', 0) > 4:
+        shape_type = MSO_SHAPE.ROUNDED_RECTANGLE
+    else:
+        shape_type = MSO_SHAPE.RECTANGLE
     shp = slide.shapes.add_shape(shape_type, px(s['x']), px(s['y']), px(w), px(h))
-    shp.fill.solid()
-    shp.fill.fore_color.rgb = to_rgb(c)
-    shp.line.fill.background()  # no outline
+    if has_visible_fill:
+        shp.fill.solid()
+        shp.fill.fore_color.rgb = to_rgb(c)
+    else:
+        shp.fill.background()
+    if has_border:
+        border_color = parse_rgba(s['bco'])
+        border_width = s.get('bw', 1)
+        if border_color:
+            shp.line.color.rgb = to_rgb(border_color)
+            shp.line.width = Pt(border_width * 0.75)
+        else:
+            shp.line.fill.background()
+    else:
+        shp.line.fill.background()  # no outline
+
+
+def _apply_text_transform(text, tt):
+    """Apply CSS text-transform to a string."""
+    if tt == 'uppercase':
+        return text.upper()
+    if tt == 'lowercase':
+        return text.lower()
+    if tt == 'capitalize':
+        return text.capitalize()
+    return text
 
 
 def _add_text(slide, t, font_ratios=None):
@@ -529,11 +597,7 @@ def _add_text(slide, t, font_ratios=None):
                 continue
             hl_x, hl_y = rd['hlX'], rd['hlY']
             hl_w, hl_h = rd['hlW'], rd['hlH']
-            hl_text = rd['t']
-            tt = rd.get('tt', 'none')
-            if tt == 'uppercase': hl_text = hl_text.upper()
-            elif tt == 'lowercase': hl_text = hl_text.lower()
-            elif tt == 'capitalize': hl_text = hl_text.title()
+            hl_text = _apply_text_transform(rd['t'], rd.get('tt', 'none'))
             # Create a text box with solid fill for the inline highlight
             hlBox = slide.shapes.add_textbox(px(hl_x), px(hl_y), px(hl_w), px(hl_h))
             hlTf = hlBox.text_frame
@@ -557,15 +621,7 @@ def _add_text(slide, t, font_ratios=None):
                 hlR.font.color.rgb = to_rgb(co)
 
     for i, rd in enumerate(runs):
-        text = rd['t']
-        # Apply CSS text-transform
-        tt = rd.get('tt', 'none')
-        if tt == 'uppercase':
-            text = text.upper()
-        elif tt == 'lowercase':
-            text = text.lower()
-        elif tt == 'capitalize':
-            text = text.title()
+        text = _apply_text_transform(rd['t'], rd.get('tt', 'none'))
         # Space between inline runs (HTML whitespace collapsing)
         if i > 0:
             text = ' ' + text
