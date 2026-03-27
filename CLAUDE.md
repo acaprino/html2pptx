@@ -20,11 +20,11 @@ Core tool: `html_to_pptx.py` -- parses HTML slides via Playwright, extracts DOM 
 ## CLI Usage
 
 ```
-python html_to_pptx.py [html_dir] [output] [--width W] [--height H]
+python html_to_pptx.py [-i INPUT] [-o OUTPUT] [--width W] [--height H]
 ```
 
-- `html_dir` -- Directory with HTML files (default: `presentazione_html`)
-- `output` -- Output PPTX path (default: `Slides1.pptx`)
+- `-i`, `--input` -- Directory with HTML files (default: `presentazione_html`)
+- `-o`, `--output` -- Output PPTX path (default: `Slides1.pptx`)
 - `--width` -- Viewport width in pixels (default: 1280)
 - `--height` -- Viewport height in pixels (default: 720)
 
@@ -69,7 +69,7 @@ Injects `<style>.flex-1{min-height:0!important;min-width:0!important;}</style>` 
 ## Workflow
 
 1. Edit `html_to_pptx.py`
-2. Run: `python html_to_pptx.py presentazione_html` (or use `run.bat`)
+2. Run: `python html_to_pptx.py -i presentazione_html` (or use `run.bat`)
 3. Open output: `start Slides1.pptx`
 4. Export PDF from PowerPoint for comparison
 

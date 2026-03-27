@@ -79,21 +79,96 @@ ALIGN = {
 }
 
 
+# ── Shared container detection (used by both preprocessor and extractor) ──
+
+FIND_CONTAINER_JS = """
+    var best = null, bestArea = 0;
+    var ch = document.body.children;
+    for (var i = 0; i < ch.length; i++) {
+        var bodyChild = ch[i], tag = bodyChild.tagName;
+        if (!tag || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'LINK' || tag === 'META') continue;
+        var s = getComputedStyle(bodyChild);
+        if (s.display === 'none' || s.visibility === 'hidden') continue;
+        var r = bodyChild.getBoundingClientRect();
+        if (r.width * r.height > bestArea) { bestArea = r.width * r.height; best = bodyChild; }
+    }
+"""
+
+# ── DOM pre-processing: flatten complex HTML before extraction ────────
+# Runs in Playwright before the main extractor. Modifies the DOM in-place
+# so the walker sees a simpler structure.
+
+PREPROCESS_JS = r"""() => {
+    // Find container (shared logic with extractor)
+""" + FIND_CONTAINER_JS + r"""
+    var c = bestArea >= 100 ? best : null;
+    if (!c) return 0;
+
+    // ── Step 1: Resolve <br> into block-level wrappers ──
+    // Find elements that DIRECTLY contain <br> children.
+    // Split their child nodes around <br> into separate <div> blocks,
+    // so the walker creates separate text entries for each visual line.
+    var brCount = 0;
+    var candidates = c.querySelectorAll('*');
+    for (var ci = 0; ci < candidates.length; ci++) {
+        var candidate = candidates[ci];
+        // Check if this element has direct <br> children
+        var hasBr = false;
+        for (var j = 0; j < candidate.childNodes.length; j++) {
+            if (candidate.childNodes[j].nodeType === 1 && candidate.childNodes[j].tagName === 'BR') {
+                hasBr = true; break;
+            }
+        }
+        if (!hasBr) continue;
+
+        // Capture computed style before DOM mutation
+        var savedTextAlign = getComputedStyle(candidate).textAlign;
+
+        // Split child nodes into segments around <br> tags
+        var nodes = Array.from(candidate.childNodes);
+        var segments = [[]];
+        for (var ni = 0; ni < nodes.length; ni++) {
+            var node = nodes[ni];
+            if (node.nodeType === 1 && node.tagName === 'BR') {
+                segments.push([]);
+                brCount++;
+            } else {
+                segments[segments.length - 1].push(node);
+            }
+        }
+
+        // Replace content with wrapped segments
+        // Note: consecutive <br> tags produce empty segments that are intentionally
+        // collapsed — slide content rarely uses double-<br> for spacing.
+        while (candidate.firstChild) candidate.removeChild(candidate.firstChild);
+        for (var si = 0; si < segments.length; si++) {
+            var seg = segments[si];
+            var hasContent = false;
+            for (var k = 0; k < seg.length; k++) {
+                if (seg[k].nodeType === 3 && seg[k].textContent.trim()) { hasContent = true; break; }
+                if (seg[k].nodeType === 1) { hasContent = true; break; }
+            }
+            if (!hasContent) continue;
+
+            var wrapper = document.createElement('div');
+            wrapper.style.textAlign = savedTextAlign;
+            for (var m = 0; m < seg.length; m++) {
+                wrapper.appendChild(seg[m]);
+            }
+            candidate.appendChild(wrapper);
+        }
+    }
+
+    return brCount;
+}"""
+
+
 # ── JavaScript DOM extraction (executed inside Playwright browser) ───
 
 JS = r"""() => {
-    // Container detection: find the largest visible top-level element
+    // Container detection (shared logic with preprocessor)
     const c = (function() {
-        var best = null, bestArea = 0;
-        var ch = document.body.children;
-        for (var i = 0; i < ch.length; i++) {
-            var el = ch[i], tag = el.tagName;
-            if (!tag || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'LINK' || tag === 'META') continue;
-            var s = getComputedStyle(el);
-            if (s.display === 'none' || s.visibility === 'hidden') continue;
-            var r = el.getBoundingClientRect();
-            if (r.width * r.height > bestArea) { bestArea = r.width * r.height; best = el; }
-        }
+""" + FIND_CONTAINER_JS + r"""
         return bestArea >= 100 ? best : null;
     })();
     if (!c) return null;
@@ -160,8 +235,8 @@ JS = r"""() => {
         }
 
         // Detect circular elements (border-radius >= 40% of min dimension, roughly square)
-        var br_val = parseFloat(cs.borderTopLeftRadius) || 0;
         var minDim = Math.min(rect.w, rect.h);
+        var br_val = parseFloat(cs.borderTopLeftRadius) || 0;
         var isCircle = (br_val >= minDim * 0.4) && (minDim > 20) &&
                        (Math.max(rect.w, rect.h) / minDim < 1.5);
 
@@ -666,9 +741,9 @@ def main():
         sys.stdout.reconfigure(encoding='utf-8')
 
     parser = argparse.ArgumentParser(description='Convert HTML slides to native PPTX elements')
-    parser.add_argument('html_dir', nargs='?', default=str(HTML_DIR),
+    parser.add_argument('-i', '--input', default=str(HTML_DIR),
                         help='Directory with HTML files (default: presentazione_html)')
-    parser.add_argument('output', nargs='?', default=str(OUTPUT),
+    parser.add_argument('-o', '--output', default=str(OUTPUT),
                         help='Output PPTX path (default: Slides1.pptx)')
     parser.add_argument('--width', type=int, default=VP_W,
                         help='Viewport width in pixels (default: %(default)s)')
@@ -676,7 +751,7 @@ def main():
                         help='Viewport height in pixels (default: %(default)s)')
     args = parser.parse_args()
 
-    html_dir = Path(args.html_dir)
+    html_dir = Path(args.input)
     output = Path(args.output)
 
     # Update globals so px(), build_slide(), etc. use the right dimensions
@@ -729,6 +804,12 @@ def main():
                     except Exception:
                         pass  # Best-effort: proceed if networkidle hangs (e.g. persistent connections)
                     page.wait_for_timeout(500)  # Tailwind JIT compile time after network settles
+
+                    # Pre-process: flatten complex HTML (resolve <br>, etc.)
+                    try:
+                        page.evaluate(PREPROCESS_JS)
+                    except Exception as e:
+                        print(f"  WARN: preprocess failed: {e}", file=sys.stderr)
 
                     data = page.evaluate(JS)
                     if not data:
