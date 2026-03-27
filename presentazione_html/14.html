@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Scenario 2026: L'IA ridisegna la consulenza IT</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Light Theme Colors */
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        /* KPI Card Styles - Light Theme */
+        .kpi-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            border-color: #FF6200;
+            background-color: #FFFBF7; /* Very light orange tint */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Diagram Styles */
+        .diagram-container {
+            position: relative;
+        }
+
+        .pyramid-level {
+            background-color: #E5E7EB; /* Gray-200 */
+            border: 1px solid #D1D5DB; /* Gray-300 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4B5563; /* Gray-600 */
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+        
+        .pyramid-base {
+            background-color: #F3F4F6; /* Gray-100 */
+            border: 1px solid #E5E7EB;
+            color: #6B7280;
+        }
+
+        .obelisk-level {
+            background-color: rgba(255, 98, 0, 0.05);
+            border: 1px solid #FF6200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #C2410C; /* Darker Orange for text readability */
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .obelisk-base {
+            background-color: #1F2937; /* Gray-800 for contrast */
+            border: 1px solid #374151;
+            color: white;
+        }
+
+        .arrow-right {
+            display: inline-block;
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 15px solid #FF6200;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-tri-tech-light text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                    Lo Scenario 2026: <span class="text-tri-tech-orange">L'IA ridisegna la consulenza</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    I numeri che guidano la strategia: adattarsi o scomparire
+                </p>
+</div>
+<div class="opacity-80">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">MARKET_DATA</span></p>
+</div>
+</div>
+<!-- KPI Row -->
+<div class="grid grid-cols-4 gap-6 mb-10 z-10">
+<!-- KPI 1 -->
+<div class="kpi-card rounded-xl p-6 flex flex-col items-center text-center">
+<div class="text-[#FF6200] font-mono font-bold text-5xl mb-2">66%</div>
+<div class="h-0.5 w-12 bg-gray-200 mb-3"></div>
+<p class="font-poppins font-bold text-gray-800 text-lg mb-1">Automazione Junior</p>
+<p class="font-inter text-gray-600 text-xs leading-relaxed">
+                    dei task junior sarà automatizzabile entro il 2026. Il ruolo "entry-level" sta svanendo.
+                </p>
+</div>
+<!-- KPI 2 -->
+<div class="kpi-card rounded-xl p-6 flex flex-col items-center text-center">
+<div class="text-[#FF6200] font-mono font-bold text-5xl mb-2">30%</div>
+<div class="h-0.5 w-12 bg-gray-200 mb-3"></div>
+<p class="font-poppins font-bold text-gray-800 text-lg mb-1">Efficienza Dev</p>
+<p class="font-inter text-gray-600 text-xs leading-relaxed">
+                    guadagno di efficienza medio con AI-assisted development. Più veloce, meno errori.
+                </p>
+</div>
+<!-- KPI 3 -->
+<div class="kpi-card rounded-xl p-6 flex flex-col items-center text-center">
+<div class="text-[#FF6200] font-mono font-bold text-5xl mb-2 uppercase tracking-tighter">SHIFT</div>
+<div class="h-0.5 w-12 bg-gray-200 mb-3"></div>
+<p class="font-poppins font-bold text-gray-800 text-lg mb-1">Ruolo Strategico</p>
+<p class="font-inter text-gray-600 text-xs leading-relaxed">
+                    Da "Task Executor" a "Educator &amp; Strategist". L'umano guida, l'IA esegue.
+                </p>
+</div>
+<!-- KPI 4 -->
+<div class="kpi-card rounded-xl p-6 flex flex-col items-center text-center">
+<div class="text-[#FF6200] font-mono font-bold text-5xl mb-2">-40%</div>
+<div class="h-0.5 w-12 bg-gray-200 mb-3"></div>
+<p class="font-poppins font-bold text-gray-800 text-lg mb-1">Ricerca &amp; Analisi</p>
+<p class="font-inter text-gray-600 text-xs leading-relaxed">
+                    tempo risparmiato nella fase di discovery tecnica e analisi documentale.
+                </p>
+</div>
+</div>
+<!-- Diagram Section: Pyramid vs Obelisk -->
+<div class="flex-1 bg-gray-50 border border-gray-200 rounded-2xl p-6 relative overflow-hidden">
+<!-- Background Decoration -->
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<i class="fas fa-shapes text-6xl text-gray-400"></i>
+</div>
+<div class="flex items-center justify-center h-full gap-16">
+<!-- Traditional Model (Pyramid) -->
+<div class="flex flex-col items-center w-64">
+<p class="font-poppins font-bold text-gray-500 mb-4 uppercase tracking-wider text-sm">Modello Tradizionale</p>
+<div class="relative w-full h-48 flex flex-col justify-end items-center">
+<!-- Top: Seniors (Small) -->
+<div class="pyramid-level w-12 h-10 rounded-t-sm">Senior</div>
+<!-- Middle: Mid (Medium) -->
+<div class="pyramid-level w-32 h-14">Mid-Level</div>
+<!-- Bottom: Juniors (Large) -->
+<div class="pyramid-level pyramid-base w-56 h-24 rounded-b-sm">
+<span class="text-center">Molti Junior<br/>(Body Rental)</span>
+</div>
+</div>
+<p class="font-mono text-xs text-red-500 mt-4 text-center font-medium">
+<i class="fas fa-exclamation-triangle mr-1"></i> A Rischio Automazione
+                    </p>
+</div>
+<!-- Transition Arrow -->
+<div class="flex flex-col items-center justify-center">
+<div class="w-16 h-1 bg-gradient-to-r from-gray-300 to-[#FF6200] rounded-full mb-2"></div>
+<p class="font-mono text-[#FF6200] text-xs font-bold uppercase">Evoluzione</p>
+</div>
+<!-- TIA Model (Obelisk) -->
+<div class="flex flex-col items-center w-64">
+<p class="font-poppins font-bold text-[#FF6200] mb-4 uppercase tracking-wider text-sm">Modello TIA (Obelisco)</p>
+<div class="relative w-full h-48 flex flex-col justify-end items-center">
+<!-- Top: Architects (Strong) -->
+<div class="obelisk-level w-28 h-12 rounded-t-md bg-[#FFF5F0]">
+<span class="font-bold">Architects + AI</span>
+</div>
+<!-- Middle: Consultants (Strong) -->
+<div class="obelisk-level w-32 h-24">
+<span class="text-center">AI-Skilled Consultants<br/>(Full Stack + Agentic)</span>
+</div>
+<!-- Bottom: Juniors (Reduced) -->
+<div class="obelisk-level obelisk-base w-24 h-12 rounded-b-md">
+<span class="text-xs">No Junior Puri</span>
+</div>
+</div>
+<p class="font-mono text-xs text-[#FF6200] mt-4 text-center font-bold">
+<i class="fas fa-check-circle mr-1"></i> Team Snello &amp; Potente
+                    </p>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 right-12 flex items-center space-x-2">
+<div class="h-1 w-8 bg-[#FF6200]"></div>
+<p class="font-mono text-[10px] text-gray-400">MARKET_TRANSFORMATION_DATA</p>
+</div>
+</div>
+</body>
+</html>

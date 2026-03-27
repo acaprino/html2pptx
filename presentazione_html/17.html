@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Come TIA Potenzia i Servizi Tri-Tech</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        /* Grid Box Styling - Light Theme */
+        .service-box {
+            background-color: #F8F8F8;
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-box:hover {
+            border-color: #FF6200;
+            background-color: #FFFFFF;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Central Hub Styling - Light Theme */
+        .central-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background-color: #FFFFFF;
+            border: 2px solid #FF6200;
+            border-radius: 50%;
+            z-index: 50;
+            box-shadow: 0 0 30px rgba(255, 98, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hub-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            border: 1px dashed rgba(255, 98, 0, 0.3);
+            border-radius: 50%;
+            z-index: 40;
+            animation: spin 60s linear infinite;
+        }
+
+        /* Connector Lines - Light Theme */
+        .connector-line {
+            position: absolute;
+            background-color: #E5E5E5;
+            z-index: 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Box Specific Connectors */
+        .line-tl { top: 50%; left: 50%; width: 2px; height: 150px; transform: translate(-50%, -100%) rotate(-45deg); transform-origin: bottom center; }
+        .line-tr { top: 50%; left: 50%; width: 2px; height: 150px; transform: translate(-50%, -100%) rotate(45deg); transform-origin: bottom center; }
+        .line-bl { top: 50%; left: 50%; width: 2px; height: 150px; transform: translate(-50%, 0) rotate(45deg); transform-origin: top center; }
+        .line-br { top: 50%; left: 50%; width: 2px; height: 150px; transform: translate(-50%, 0) rotate(-45deg); transform-origin: top center; }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Number Styling - Light Theme */
+        .box-number {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            color: #E5E5E5;
+            transition: color 0.3s ease;
+        }
+        .service-box:hover .box-number {
+            color: rgba(255, 98, 0, 0.2);
+        }
+        
+        /* Icon Box */
+        .icon-box {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+        }
+        .service-box:hover .icon-box {
+            border-color: #FF6200;
+        }
+
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-tri-tech-light text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-4 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                    Come TIA Potenzia i Servizi Tri-Tech
+                </h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    Integrazione nei 4 pilastri di servizio esistenti
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">INTEGRATION</span></p>
+</div>
+</div>
+<!-- Main Content Area: 2x2 Grid with Hub -->
+<div class="flex-1 relative flex items-center justify-center p-4">
+<!-- Center Connectors (Visual Only) -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="connector-line line-tl"></div>
+<div class="connector-line line-tr"></div>
+<div class="connector-line line-bl"></div>
+<div class="connector-line line-br"></div>
+</div>
+<!-- Central Hub -->
+<div class="hub-ring pointer-events-none"></div>
+<div class="central-hub group cursor-default">
+<div class="text-center">
+<h2 class="font-space font-bold text-3xl text-gray-900 tracking-widest">TIA</h2>
+<p class="font-mono text-[10px] text-[#FF6200] mt-1">CORE ENGINE</p>
+</div>
+</div>
+<!-- Grid Container -->
+<div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-8 z-10">
+<!-- Box 1: AI-Augmented Strategy (Top Left) -->
+<div class="service-box rounded-xl p-8 flex flex-col justify-between group hover:z-20">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 icon-box rounded-lg flex items-center justify-center transition-colors">
+<i class="fas fa-chess text-xl text-gray-500 group-hover:text-[#FF6200]"></i>
+</div>
+<span class="box-number text-4xl">01</span>
+</div>
+<div>
+<p class="font-mono text-xs text-[#FF6200] mb-1 uppercase tracking-wider">Strategic Consulting</p>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-3">AI-Augmented Strategy</h3>
+<p class="font-inter text-sm text-gray-600 leading-relaxed">
+                            Consulenza strategica potenziata da analisi AI, scenario modeling e decision making basato sui dati.
+                        </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200 flex items-center text-xs text-gray-500">
+<i class="fas fa-arrow-right text-[#FF6200] mr-2"></i>
+<p>ROI: Decisioni 5x più rapide</p>
+</div>
+</div>
+<!-- Box 2: Agentic Engineering (Top Right) -->
+<div class="service-box rounded-xl p-8 flex flex-col justify-between group hover:z-20">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 icon-box rounded-lg flex items-center justify-center transition-colors">
+<i class="fas fa-code text-xl text-gray-500 group-hover:text-[#FF6200]"></i>
+</div>
+<span class="box-number text-4xl">02</span>
+</div>
+<div>
+<p class="font-mono text-xs text-[#FF6200] mb-1 uppercase tracking-wider">Custom Development</p>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-3">Agentic Engineering</h3>
+<p class="font-inter text-sm text-gray-600 leading-relaxed">
+                            Sviluppo software con AI-assisted coding, agentic workflows e prototipazione 3x più rapida.
+                        </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200 flex items-center text-xs text-gray-500">
+<i class="fas fa-arrow-right text-[#FF6200] mr-2"></i>
+<p>ROI: -40% Time-to-Market</p>
+</div>
+</div>
+<!-- Box 3: AI Orchestration (Bottom Left) -->
+<div class="service-box rounded-xl p-8 flex flex-col justify-between group hover:z-20">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 icon-box rounded-lg flex items-center justify-center transition-colors">
+<i class="fas fa-project-diagram text-xl text-gray-500 group-hover:text-[#FF6200]"></i>
+</div>
+<span class="box-number text-4xl">03</span>
+</div>
+<div>
+<p class="font-mono text-xs text-[#FF6200] mb-1 uppercase tracking-wider">Integrated Solutions</p>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-3">AI Orchestration</h3>
+<p class="font-inter text-sm text-gray-600 leading-relaxed">
+                            Integrazione sistemi complessi con orchestrazione intelligente, pipeline automatizzate e monitoring.
+                        </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200 flex items-center text-xs text-gray-500">
+<i class="fas fa-arrow-right text-[#FF6200] mr-2"></i>
+<p>ROI: Scalabilità automatica</p>
+</div>
+</div>
+<!-- Box 4: Proactive Intelligence (Bottom Right) -->
+<div class="service-box rounded-xl p-8 flex flex-col justify-between group hover:z-20">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 icon-box rounded-lg flex items-center justify-center transition-colors">
+<i class="fas fa-chart-line text-xl text-gray-500 group-hover:text-[#FF6200]"></i>
+</div>
+<span class="box-number text-4xl">04</span>
+</div>
+<div>
+<p class="font-mono text-xs text-[#FF6200] mb-1 uppercase tracking-wider">Operational Efficiency</p>
+<h3 class="font-poppins font-bold text-2xl text-gray-900 mb-3">Proactive Intelligence</h3>
+<p class="font-inter text-sm text-gray-600 leading-relaxed">
+                            Efficienza operativa con alerting predittivo, automazione proattiva e sistemi di self-healing.
+                        </p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-200 flex items-center text-xs text-gray-500">
+<i class="fas fa-arrow-right text-[#FF6200] mr-2"></i>
+<p>ROI: -60% Downtime</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 right-12 text-right">
+<p class="font-mono text-[10px] text-gray-400">SERVICE_MATRIX_V3.0 // POWERED_BY_TIA</p>
+</div>
+</div>
+</body>
+</html>

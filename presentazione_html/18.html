@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Da Body Rental a Outcome-Based</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Light Theme Colors */
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-dark { color: #1A1A1A; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        
+        /* Box Styles */
+        .panel-from {
+            background-color: #F3F4F6; /* Gray-100 */
+            border: 1px solid #9CA3AF; /* Gray-400 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .panel-to {
+            background-color: #FFF5F0; /* Orange-50 equivalent */
+            border: 2px solid #FF6200;
+            box-shadow: 0 4px 15px rgba(255, 98, 0, 0.15);
+        }
+
+        .offer-card {
+            background-color: #FAFAFA;
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s ease;
+        }
+
+        .offer-card:hover {
+            border-color: #FF6200;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+        
+        /* KPI Bar */
+        .kpi-bar {
+            background-color: #F9FAFB;
+            border-top: 1px solid #E5E5E5;
+            border-bottom: 1px solid #E5E5E5;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-tri-tech-light text-gray-800">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-10 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-6 z-20">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-1">
+                    Da Body Rental a <span class="text-tri-tech-orange">Outcome-Based</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                    Il nuovo posizionamento commerciale
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TIA <span class="text-[#FF6200]">BUSINESS MODEL</span></p>
+</div>
+</div>
+<!-- Main Transition Area -->
+<div class="flex-1 flex flex-col z-10 space-y-6">
+<!-- FROM -> TO Section -->
+<div class="flex items-stretch justify-between h-48 relative">
+<!-- FROM Box -->
+<div class="w-[45%] panel-from rounded-xl p-6 relative flex flex-col justify-center group">
+<div class="absolute top-0 left-0 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-br-lg uppercase tracking-wider">
+                        Old Model
+                    </div>
+<div class="flex items-center mb-2">
+<i class="fas fa-user-clock text-3xl text-gray-500 mr-4"></i>
+<h2 class="font-poppins font-bold text-2xl text-gray-700">Body Rental</h2>
+</div>
+<ul class="space-y-1 ml-1">
+<li class="flex items-center text-gray-600 text-sm font-inter">
+<i class="fas fa-times text-red-600 mr-2 text-xs"></i> Vendita Ore / Time &amp; Material
+                        </li>
+<li class="flex items-center text-gray-600 text-sm font-inter">
+<i class="fas fa-times text-red-600 mr-2 text-xs"></i> Margini Bassi &amp; Commodity
+                        </li>
+<li class="flex items-center text-gray-600 text-sm font-inter">
+<i class="fas fa-times text-red-600 mr-2 text-xs"></i> Facilmente Sostituibile
+                        </li>
+</ul>
+</div>
+<!-- Transition Arrow -->
+<div class="flex-1 flex items-center justify-center px-4 relative">
+<div class="h-1 bg-gray-300 w-full relative">
+<div class="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-1">
+<i class="fas fa-chevron-right text-gray-400 text-2xl"></i>
+</div>
+</div>
+<div class="absolute bg-white px-2 py-1 border border-gray-300 rounded text-xs text-gray-500 font-mono shadow-sm">
+                        TRANSITION
+                    </div>
+</div>
+<!-- TO Box -->
+<div class="w-[45%] panel-to rounded-xl p-6 relative flex flex-col justify-center">
+<div class="absolute top-0 right-0 bg-[#FF6200] text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        New Model
+                    </div>
+<div class="flex items-center mb-2">
+<i class="fas fa-rocket text-3xl text-[#FF6200] mr-4"></i>
+<h2 class="font-poppins font-bold text-2xl text-gray-900">AI-Skilled Consulting</h2>
+</div>
+<ul class="space-y-1 ml-1">
+<li class="flex items-center text-gray-800 text-sm font-inter">
+<i class="fas fa-check text-[#FF6200] mr-2 text-xs"></i> Vendita Outcomes / Risultati
+                        </li>
+<li class="flex items-center text-gray-800 text-sm font-inter">
+<i class="fas fa-check text-[#FF6200] mr-2 text-xs"></i> Margini 30-40% &amp; Differenziato
+                        </li>
+<li class="flex items-center text-gray-800 text-sm font-inter">
+<i class="fas fa-check text-[#FF6200] mr-2 text-xs"></i> Indispensabile &amp; Strategico
+                        </li>
+</ul>
+</div>
+</div>
+<!-- New Offers Grid -->
+<div>
+<div class="flex items-center space-x-2 mb-3">
+<div class="h-4 w-1 bg-[#FF6200]"></div>
+<h3 class="font-poppins font-semibold text-gray-800 text-lg">Nuove Offerte Concrete</h3>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<!-- Offer 1 -->
+<div class="offer-card rounded-lg p-5">
+<div class="flex justify-between items-start mb-2">
+<i class="fas fa-search text-[#FF6200] text-xl"></i>
+<span class="text-xs text-gray-400 font-mono">OFFER_01</span>
+</div>
+<h4 class="font-bold text-gray-900 font-poppins text-lg mb-1">Discovery Sprints</h4>
+<p class="text-xs text-gray-600 font-inter leading-relaxed">
+                            2-4 settimane, prezzo fisso. Output: Roadmap, Prototipo o Analisi di Fattibilità. Deliverable concreto.
+                        </p>
+</div>
+<!-- Offer 2 -->
+<div class="offer-card rounded-lg p-5">
+<div class="flex justify-between items-start mb-2">
+<i class="fas fa-users-cog text-[#FF6200] text-xl"></i>
+<span class="text-xs text-gray-400 font-mono">OFFER_02</span>
+</div>
+<h4 class="font-bold text-gray-900 font-poppins text-lg mb-1">AI Delivery Squads</h4>
+<p class="text-xs text-gray-600 font-inter leading-relaxed">
+                            Team piccoli + AI. 3x velocità rispetto a un team tradizionale. Squadre d'élite autonome.
+                        </p>
+</div>
+<!-- Offer 3 -->
+<div class="offer-card rounded-lg p-5">
+<div class="flex justify-between items-start mb-2">
+<i class="fas fa-sync-alt text-[#FF6200] text-xl"></i>
+<span class="text-xs text-gray-400 font-mono">OFFER_03</span>
+</div>
+<h4 class="font-bold text-gray-900 font-poppins text-lg mb-1">Modernization Programs</h4>
+<p class="text-xs text-gray-600 font-inter leading-relaxed">
+                            Migrazione legacy con AI. Refactoring automatizzato, zero black box risk.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- KPI Footer Bar -->
+<div class="mt-auto z-20">
+<div class="kpi-bar rounded-lg p-4 flex justify-around items-center shadow-sm">
+<div class="text-center">
+<p class="text-xs text-gray-500 font-mono uppercase tracking-widest mb-1">Velocità Delivery</p>
+<p class="text-2xl font-bold text-gray-900 font-poppins">3x <span class="text-xs font-normal text-gray-500 align-middle">Faster</span></p>
+</div>
+<div class="h-8 w-px bg-gray-200"></div>
+<div class="text-center">
+<p class="text-xs text-gray-500 font-mono uppercase tracking-widest mb-1">Black Box Risk</p>
+<p class="text-2xl font-bold text-gray-900 font-poppins">0% <span class="text-xs font-normal text-gray-500 align-middle">Zero Trust</span></p>
+</div>
+<div class="h-8 w-px bg-gray-200"></div>
+<div class="text-center">
+<p class="text-xs text-[#FF6200] font-mono uppercase tracking-widest mb-1">Target Margini</p>
+<p class="text-2xl font-bold text-[#FF6200] font-poppins">30-40% <span class="text-xs font-normal text-[#FF6200] opacity-80 align-middle">Gross Margin</span></p>
+</div>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-[#FF6200] opacity-5 filter blur-[80px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-48 h-48 bg-gray-200 opacity-20 filter blur-[60px] pointer-events-none"></div>
+</div>
+</body>
+</html>

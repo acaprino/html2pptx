@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>La Regola della Spiegazione</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .bg-tri-tech-orange { background-color: #FF6200; }
+        .text-tri-tech-orange { color: #FF6200; }
+        .border-tri-tech-orange { border-color: #FF6200; }
+        
+        .step-card {
+            background-color: #F8F8F8;
+            border: 1px solid #E5E5E5;
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            border-color: #FF6200;
+            background-color: #FFFFFF;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateX(5px);
+        }
+
+        /* Connecting line for vertical steps */
+        .connector-line {
+            position: absolute;
+            left: 24px; /* Center of the circle */
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background-color: #E5E5E5;
+            z-index: 0;
+        }
+
+        .step-container:last-child .connector-line {
+            display: none;
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-10 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-6 z-20 relative border-b border-gray-100 pb-4">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-1">
+                La Difesa Finale: <span class="text-[#FF6200]">La Regola della Spiegazione</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                Se non sai difenderlo, non lo consegni
+            </p>
+</div>
+<div class="opacity-100 text-right">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-800">TIA <span class="text-[#FF6200]">QUALITY</span></p>
+<p class="font-mono text-xs text-gray-400 mt-1">PROTOCOL_DEFENSE_V1</p>
+</div>
+</div>
+<!-- Main Content Area: Vertical Steps -->
+<div class="flex-1 flex flex-col justify-center gap-4 z-10 relative pl-4 pr-4">
+<!-- Step 1 -->
+<div class="flex items-start step-container relative">
+<!-- Connector Line -->
+<div class="connector-line"></div>
+<!-- Number Circle -->
+<div class="relative z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-2 border-[#FF6200] flex items-center justify-center mr-6 shadow-md">
+<span class="font-mono text-xl font-bold text-[#FF6200]">1</span>
+</div>
+<!-- Content Card -->
+<div class="flex-1 step-card rounded-lg p-5 flex flex-col justify-center">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-poppins font-bold text-xl text-gray-900 tracking-wide">DECOSTRUZIONE</h3>
+<i class="fas fa-puzzle-piece text-gray-300"></i>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-snug">
+                    Scomponi il tuo output. Spiega ogni pezzo. <span class="text-gray-900 font-semibold bg-orange-50 px-1 rounded">Se non sai perchè una riga di codice è lì, non la consegni.</span>
+</p>
+</div>
+</div>
+<!-- Arrow Down Icon between steps -->
+<div class="pl-12 ml-6 -my-2 z-0 opacity-40">
+<i class="fas fa-chevron-down text-gray-300"></i>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start step-container relative">
+<!-- Connector Line -->
+<div class="connector-line"></div>
+<!-- Number Circle -->
+<div class="relative z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-2 border-[#FF6200] flex items-center justify-center mr-6 shadow-md">
+<span class="font-mono text-xl font-bold text-[#FF6200]">2</span>
+</div>
+<!-- Content Card -->
+<div class="flex-1 step-card rounded-lg p-5 flex flex-col justify-center">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-poppins font-bold text-xl text-gray-900 tracking-wide">GIUSTIFICAZIONE</h3>
+<i class="fas fa-balance-scale text-gray-300"></i>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-snug">
+                    Per ogni scelta architetturale, spiega il trade-off. Perchè questo pattern e non un altro? Quali alternative hai valutato?
+                </p>
+</div>
+</div>
+<!-- Arrow Down Icon between steps -->
+<div class="pl-12 ml-6 -my-2 z-0 opacity-40">
+<i class="fas fa-chevron-down text-gray-300"></i>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start step-container relative">
+<!-- Number Circle -->
+<div class="relative z-10 flex-shrink-0 w-12 h-12 rounded-full bg-white border-2 border-[#FF6200] flex items-center justify-center mr-6 shadow-md">
+<span class="font-mono text-xl font-bold text-[#FF6200]">3</span>
+</div>
+<!-- Content Card -->
+<div class="flex-1 step-card rounded-lg p-5 flex flex-col justify-center border-l-4 border-l-[#FF6200]">
+<div class="flex justify-between items-center mb-1">
+<h3 class="font-poppins font-bold text-xl text-gray-900 tracking-wide">IL VERO TEST</h3>
+<i class="fas fa-vial text-gray-300"></i>
+</div>
+<p class="font-inter text-gray-600 text-sm leading-snug">
+                    Due domande: <span class="italic text-gray-900 font-medium">"Perchè funziona?"</span> e <span class="italic text-gray-900 font-medium">"Cosa succede quando smette di funzionare?"</span> Se non sai rispondere a entrambe, non hai capito.
+                </p>
+</div>
+</div>
+</div>
+<!-- Footer / Principle Box -->
+<div class="mt-6 z-20">
+<div class="w-full bg-[#FF6200] rounded-lg p-5 flex items-center justify-between shadow-lg relative overflow-hidden group">
+<div class="flex items-center relative z-10">
+<div class="bg-white text-[#FF6200] w-10 h-10 rounded flex items-center justify-center mr-4 shadow-sm">
+<i class="fas fa-shield-alt text-xl"></i>
+</div>
+<div>
+<p class="font-poppins font-bold text-white text-lg uppercase tracking-wider mb-0 opacity-90">PRINCIPIO FONDAMENTALE</p>
+<p class="font-inter text-white font-medium text-sm">
+                        Nessun output che non sai difendere davanti a un cliente, un collega, o te stesso alle 3 di notte.
+                    </p>
+</div>
+</div>
+<div class="relative z-10 px-6 py-2 bg-white text-[#FF6200] font-mono font-bold text-xl rounded border border-white transform -skew-x-12 shadow-md">
+                ZERO BLACK BOX
+            </div>
+<!-- Shine effect -->
+<div class="absolute right-0 top-0 bottom-0 w-32 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500 filter blur-xl"></div>
+</div>
+</div>
+</div>
+</body>
+</html>

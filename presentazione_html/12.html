@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Il Blackout Tecnologico</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        /* Light Theme Colors */
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-dark { color: #1A1A1A; }
+        .text-tri-tech-orange { color: #FF6200; }
+        
+        /* Card Styles */
+        .light-panel {
+            background-color: #F8F8F8;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .success-panel {
+            background-color: #F0FDF4; /* Green-50 */
+            border: 1px solid #BBF7D0; /* Green-200 */
+        }
+
+        .pulse-border-light {
+            animation: pulse-border-light 3s infinite;
+        }
+        
+        @keyframes pulse-border-light {
+            0% { border-color: #F05C00; box-shadow: 0 0 0 rgba(240, 92, 0, 0); }
+            50% { border-color: #F05C00; box-shadow: 0 0 20px rgba(240, 92, 0, 0.15); }
+            100% { border-color: #F05C00; box-shadow: 0 0 0 rgba(240, 92, 0, 0); }
+        }
+        
+        /* Removed gradients to comply with guidelines */
+        .hazard-stripes {
+            /* Using a simple border pattern simulation or solid color instead of gradients */
+            border-top: 4px dashed rgba(240, 92, 0, 0.2);
+            border-bottom: 4px dashed rgba(240, 92, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Header -->
+<div class="flex justify-between items-start mb-6 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                Il Crogiolo: <span class="text-[#F05C00]">Il Blackout Tecnologico</span>
+</h1>
+<p class="font-inter text-xl text-gray-500 font-light">
+                GG 6-20: 15 giorni senza IA. Di proposito.
+            </p>
+</div>
+<div class="opacity-100 text-right">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-800">PHASE <span class="text-[#F05C00]">RESTRICTION</span></p>
+<div class="flex items-center justify-end space-x-2 mt-1">
+<div class="w-2 h-2 rounded-full bg-[#F05C00] animate-pulse"></div>
+<p class="font-mono text-xs text-[#F05C00] font-bold">ACTIVE_PROTOCOL</p>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="flex-1 grid grid-cols-12 gap-8 z-10 items-stretch pb-6">
+<!-- Left Column: The Constraints -->
+<div class="col-span-3 flex flex-col justify-center space-y-6">
+<!-- Removed Tools -->
+<div class="light-panel p-6 rounded-lg relative overflow-hidden bg-red-50 border-red-100">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#F05C00]"></div>
+<h3 class="font-poppins font-bold text-lg text-gray-800 mb-4 flex items-center">
+<i class="fas fa-ban text-[#F05C00] mr-2"></i>
+<span>RIMOSSI</span>
+</h3>
+<div class="space-y-3 font-mono text-sm text-gray-600">
+<p class="flex items-center opacity-70 line-through decoration-[#F05C00] decoration-2">
+<span class="w-2 h-2 bg-gray-400 rounded-full mr-3"></span>ChatGPT
+                    </p>
+<p class="flex items-center opacity-70 line-through decoration-[#F05C00] decoration-2">
+<span class="w-2 h-2 bg-gray-400 rounded-full mr-3"></span>GitHub Copilot
+                    </p>
+<p class="flex items-center opacity-70 line-through decoration-[#F05C00] decoration-2">
+<span class="w-2 h-2 bg-gray-400 rounded-full mr-3"></span>Claude / LLMs
+                    </p>
+</div>
+</div>
+<!-- Allowed Tools -->
+<div class="success-panel p-6 rounded-lg relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-green-600"></div>
+<h3 class="font-poppins font-bold text-lg text-gray-800 mb-4 flex items-center">
+<i class="fas fa-tools text-green-600 mr-2"></i>
+<span>CONSENTITI</span>
+</h3>
+<div class="space-y-3 font-mono text-sm text-gray-800">
+<p class="flex items-center">
+<span class="w-2 h-2 bg-green-600 rounded-full mr-3"></span>Python Puro
+                    </p>
+<p class="flex items-center">
+<span class="w-2 h-2 bg-green-600 rounded-full mr-3"></span>SQL (Raw)
+                    </p>
+<p class="flex items-center">
+<span class="w-2 h-2 bg-green-600 rounded-full mr-3"></span>Excel
+                    </p>
+<p class="flex items-center">
+<span class="w-2 h-2 bg-green-600 rounded-full mr-3"></span>Docs Ufficiali
+                    </p>
+</div>
+</div>
+</div>
+<!-- Center Column: The Visual Symbol -->
+<div class="col-span-5 flex flex-col justify-center items-center relative">
+<!-- Circular Glow (Subtle Orange) -->
+<div class="absolute w-80 h-80 bg-orange-100 rounded-full filter blur-[60px] opacity-60"></div>
+<!-- Main Warning Box -->
+<div class="w-full h-full max-h-[400px] bg-white border-2 border-[#F05C00] pulse-border-light rounded-xl flex flex-col items-center justify-center p-8 relative shadow-lg">
+<!-- Decorative Top/Bottom Borders -->
+<div class="absolute top-4 left-4 right-4 border-t-2 border-dashed border-gray-200"></div>
+<div class="absolute bottom-4 left-4 right-4 border-b-2 border-dashed border-gray-200"></div>
+<div class="relative mb-6">
+<i class="fas fa-brain text-8xl text-gray-200"></i>
+<div class="absolute inset-0 flex items-center justify-center">
+<i class="fas fa-ban text-9xl text-[#F05C00] opacity-90 transform scale-125 drop-shadow-md"></i>
+</div>
+</div>
+<h2 class="font-poppins font-bold text-3xl text-gray-900 tracking-widest uppercase mb-2">Blackout</h2>
+<p class="font-mono text-[#F05C00] text-sm tracking-wider border border-[#F05C00] bg-orange-50 px-3 py-1 rounded font-bold">
+                    SYSTEMS OFFLINE
+                </p>
+<div class="mt-8 text-center px-4">
+<p class="font-inter text-gray-600 text-sm">
+                        Rimuovere la stampella <span class="text-[#F05C00] font-bold">PRIMA</span> di insegnare a correre.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Right Column: The Why -->
+<div class="col-span-4 flex flex-col justify-center pl-4">
+<div class="mb-6 border-b border-gray-200 pb-2">
+<p class="font-mono text-xs text-[#F05C00] uppercase tracking-widest mb-1">Obiettivi Didattici</p>
+<h3 class="font-poppins font-bold text-2xl text-gray-900">Perché lo facciamo?</h3>
+</div>
+<div class="space-y-5">
+<!-- Item 1 -->
+<div class="flex items-start group">
+<div class="mt-1 min-w-[32px] h-8 flex items-center justify-center bg-[#1a1a1a] rounded text-white font-bold font-mono text-sm shadow-md group-hover:bg-[#F05C00] transition-colors">01</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-900 text-sm mb-1">Costruire il Modello Mentale</h4>
+<p class="font-inter text-xs text-gray-600 leading-relaxed">Senza autocomplete, devi visualizzare l'algoritmo nella tua testa. Costruisci il "Base_Umana".</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start group">
+<div class="mt-1 min-w-[32px] h-8 flex items-center justify-center bg-[#1a1a1a] rounded text-white font-bold font-mono text-sm shadow-md group-hover:bg-[#F05C00] transition-colors">02</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-900 text-sm mb-1">Reality Check</h4>
+<p class="font-inter text-xs text-gray-600 leading-relaxed">Scoprire cosa SAI davvero vs cosa l'IA faceva per te. È brutale, ma necessario.</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-start group">
+<div class="mt-1 min-w-[32px] h-8 flex items-center justify-center bg-[#1a1a1a] rounded text-white font-bold font-mono text-sm shadow-md group-hover:bg-[#F05C00] transition-colors">03</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-900 text-sm mb-1">Imparare a Sbagliare</h4>
+<p class="font-inter text-xs text-gray-600 leading-relaxed">Il debug manuale insegna più della scrittura. Devi capire l'errore, non solo rigenerarlo.</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-start group">
+<div class="mt-1 min-w-[32px] h-8 flex items-center justify-center bg-[#1a1a1a] rounded text-white font-bold font-mono text-sm shadow-md group-hover:bg-[#F05C00] transition-colors">04</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-900 text-sm mb-1">Vero Apprezzamento</h4>
+<p class="font-inter text-xs text-gray-600 leading-relaxed">Quando l'IA torna (GG 21), la userai come un professionista, non come un passeggero.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Quote -->
+<div class="z-20 mt-auto">
+<div class="bg-orange-50 border-l-4 border-[#F05C00] p-4 flex items-center justify-between rounded-r-lg shadow-sm">
+<div>
+<p class="font-poppins text-lg text-gray-800 italic">
+<span class="text-[#F05C00] text-2xl mr-2">"</span>
+                    Il paradosso: il periodo più doloroso è quello che crea il valore più alto.
+                    <span class="text-[#F05C00] text-2xl ml-2">"</span>
+</p>
+</div>
+<div class="font-mono text-xs text-gray-400 uppercase tracking-widest">
+                Tri-Tech Pedagogy
+            </div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIA - Competenze Necessarie Ora</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body { margin: 0; padding: 0; overflow: hidden; background-color: #FFFFFF; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .card-bg {
+            background-color: #F8F8F8;
+        }
+        
+        .unifying-bar {
+            background-color: #FFF5F0;
+            border: 1px solid #FF6200;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="w-[1280px] h-[720px] bg-white text-[#1A1A1A] flex flex-col relative p-12">
+<!-- Background Grid Pattern (SVG based to avoid CSS gradients) -->
+<div class="absolute inset-0 z-0 opacity-30 pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E5E5E5" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Header -->
+<div class="flex justify-between items-start mb-8 z-10">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-[#1A1A1A] mb-2">
+                    Le Competenze che <span class="text-[#FF6200]">Servono Ora</span>
+</h1>
+<p class="font-inter text-xl text-[#4A4A4A] font-light">
+                    3 cluster per il consulente del 2026: non basta saper usare ChatGPT.
+                </p>
+</div>
+<div class="opacity-80">
+<p class="font-poppins font-bold text-sm tracking-wider text-[#1A1A1A]">SKILL <span class="text-[#FF6200]">MATRIX</span></p>
+</div>
+</div>
+<!-- Main Content: 3 Columns -->
+<div class="flex-1 flex gap-6 items-stretch mb-4 z-10">
+<!-- Column 1: AI / Technical -->
+<div class="flex-1 flex flex-col relative group">
+<!-- Top Indicator Line -->
+<div class="h-1 w-full bg-[#FF6200] opacity-100 mb-4 rounded-full"></div>
+<div class="flex-1 card-bg border border-[#E5E5E5] p-6 rounded-lg flex flex-col items-center transition-all duration-300 hover:border-[#FF6200] hover:shadow-lg hover:shadow-orange-100">
+<!-- Icon -->
+<div class="w-16 h-16 rounded-full bg-white border border-[#FF6200] flex items-center justify-center mb-4 shadow-sm">
+<i class="fas fa-microchip text-3xl text-[#FF6200]"></i>
+</div>
+<h2 class="font-poppins font-bold text-xl text-[#1A1A1A] mb-1">AI / Technical</h2>
+<p class="font-mono text-[10px] text-[#FF6200] mb-6 tracking-widest uppercase font-bold">HARD SKILLS</p>
+<div class="w-full text-left space-y-3 font-inter text-sm text-[#4A4A4A]">
+<div class="flex items-start">
+<i class="fas fa-terminal text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Prompt Engineering</strong> avanzato</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-robot text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Agent Orchestration</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-database text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Data Literacy</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-search text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>RAG</strong> (Retrieval Augmented Generation)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Business / Strategy -->
+<div class="flex-1 flex flex-col relative group">
+<!-- Top Indicator Line -->
+<div class="h-1 w-full bg-[#FF6200] opacity-100 mb-4 rounded-full"></div>
+<div class="flex-1 card-bg border border-[#E5E5E5] p-6 rounded-lg flex flex-col items-center transition-all duration-300 hover:border-[#FF6200] hover:shadow-lg hover:shadow-orange-100">
+<!-- Icon -->
+<div class="w-16 h-16 rounded-full bg-white border border-[#FF6200] flex items-center justify-center mb-4 shadow-sm">
+<i class="fas fa-chart-line text-3xl text-[#FF6200]"></i>
+</div>
+<h2 class="font-poppins font-bold text-xl text-[#1A1A1A] mb-1">Business / Strategy</h2>
+<p class="font-mono text-[10px] text-[#FF6200] mb-6 tracking-widest uppercase font-bold">SOFT SKILLS</p>
+<div class="w-full text-left space-y-3 font-inter text-sm text-[#4A4A4A]">
+<div class="flex items-start">
+<i class="fas fa-lightbulb text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Problem Framing</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-book-open text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Storytelling</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-sync-alt text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Change Management</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-users text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Stakeholder Management</strong></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Governance & Risk -->
+<div class="flex-1 flex flex-col relative group">
+<!-- Top Indicator Line -->
+<div class="h-1 w-full bg-[#FF6200] opacity-100 mb-4 rounded-full"></div>
+<div class="flex-1 card-bg border border-[#E5E5E5] p-6 rounded-lg flex flex-col items-center transition-all duration-300 hover:border-[#FF6200] hover:shadow-lg hover:shadow-orange-100">
+<!-- Icon -->
+<div class="w-16 h-16 rounded-full bg-white border border-[#FF6200] flex items-center justify-center mb-4 shadow-sm">
+<i class="fas fa-shield-alt text-3xl text-[#FF6200]"></i>
+</div>
+<h2 class="font-poppins font-bold text-xl text-[#1A1A1A] mb-1">Governance &amp; Risk</h2>
+<p class="font-mono text-[10px] text-[#FF6200] mb-6 tracking-widest uppercase font-bold">GUARDRAILS</p>
+<div class="w-full text-left space-y-3 font-inter text-sm text-[#4A4A4A]">
+<div class="flex items-start">
+<i class="fas fa-balance-scale text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Responsible AI</strong> (RAI)</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-lock text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Security &amp; Privacy</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-user-check text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Human-in-the-Loop</strong></p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-file-contract text-[#FF6200] mt-1 mr-3 text-xs"></i>
+<p><strong>Compliance</strong></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Unifying Bottom Bar -->
+<div class="relative w-full h-14 z-10 flex items-center justify-center mt-2">
+<!-- Connecting lines from columns -->
+<div class="absolute -top-4 left-[16.6%] w-px h-4 bg-[#FF6200] opacity-50"></div>
+<div class="absolute -top-4 left-[50%] w-px h-4 bg-[#FF6200] opacity-50"></div>
+<div class="absolute -top-4 left-[83.3%] w-px h-4 bg-[#FF6200] opacity-50"></div>
+<div class="w-full h-full unifying-bar rounded-lg flex items-center justify-center relative overflow-hidden">
+<i class="fas fa-layer-group text-[#FF6200] mr-4 text-lg"></i>
+<p class="font-poppins font-bold text-lg text-[#1A1A1A] tracking-widest uppercase">
+                    3 FAMIGLIE DI COMPETENZE INTEGRATE
+                </p>
+<div class="absolute right-6 top-1/2 transform -translate-y-1/2">
+<p class="font-mono text-[10px] text-[#FF6200] font-bold">2026_PROFILE</p>
+</div>
+</div>
+</div>
+<!-- Decorative Background Circles -->
+<div class="absolute top-0 right-0 w-96 h-96 border border-[#E5E5E5] rounded-full opacity-30 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 border border-[#FF6200] rounded-full opacity-10 -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+</div>
+</body>
+</html>

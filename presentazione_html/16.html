@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Il Ciclo Osserva-Agisci-Valuta</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        
+        .bg-tri-tech-light { background-color: #FFFFFF; }
+        .text-tri-tech-dark { color: #1A1A1A; }
+        .text-tri-tech-orange { color: #FF6200; }
+        
+        /* Custom Glowing/Shadow Effects for Light Mode */
+        .glow-orange {
+            filter: drop-shadow(0 0 5px rgba(255, 98, 0, 0.3));
+        }
+        .glow-dark-orange {
+            filter: drop-shadow(0 0 5px rgba(240, 92, 0, 0.3));
+        }
+        .glow-grey {
+            filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.15));
+        }
+        
+        .center-shadow {
+            box-shadow: 0 0 20px rgba(255, 98, 0, 0.15);
+        }
+
+        /* Animation for faint rotation of background ring */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow {
+            animation: spin-slow 60s linear infinite;
+        }
+
+        /* Card styles for text blocks - Light Mode */
+        .info-card {
+            background: #F8F8F8;
+            border-left-width: 4px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .info-card:hover {
+            background: #FFFFFF;
+            transform: translateX(5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-tri-tech-light text-tri-tech-dark">
+<!-- Slide Container -->
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+<!-- Background Grid Pattern -->
+<div class="absolute inset-0 z-0 opacity-30 pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E5E5E5" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-gray-100 rounded-full opacity-60 pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] border border-gray-200 rounded-full opacity-40 pointer-events-none border-dashed spin-slow"></div>
+<!-- Header -->
+<div class="flex justify-between items-start mb-4 z-20 relative">
+<div>
+<h1 class="font-poppins font-bold text-4xl text-gray-900 mb-2">
+                    Il Ciclo: <span class="text-gray-500">OSSERVA</span> — <span class="text-[#FF6200]">AGISCI</span> — <span class="text-[#F05C00]">VALUTA</span>
+</h1>
+<p class="font-inter text-xl text-gray-600 font-light">
+                    La metodologia operativa quotidiana del consulente TIA
+                </p>
+</div>
+<div class="opacity-100">
+<p class="font-poppins font-bold text-sm tracking-wider text-gray-800">TIA <span class="text-[#FF6200]">METHOD</span></p>
+</div>
+</div>
+<!-- Main Content: Central Diagram + Text Blocks -->
+<div class="flex-1 relative w-full h-full z-10">
+<!-- Central SVG Diagram -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px]">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 500 500">
+<defs>
+<!-- Arrow Marker -->
+<marker id="arrowhead" markerheight="7" markerwidth="10" orient="auto" refx="9" refy="3.5">
+<polygon fill="#9CA3AF" points="0 0, 10 3.5, 0 7"></polygon>
+</marker>
+</defs>
+<!-- Center Hub -->
+<circle class="center-shadow" cx="250" cy="250" fill="#FFFFFF" r="60" stroke="#FF6200" stroke-width="2"></circle>
+<text dominant-baseline="middle" fill="#FF6200" font-family="'Poppins', sans-serif" font-size="24" font-weight="bold" text-anchor="middle" x="250" y="255">TIA</text>
+<text dominant-baseline="middle" fill="#6B7280" font-family="'Roboto Mono', monospace" font-size="10" letter-spacing="2" text-anchor="middle" x="250" y="275">CORE LOOP</text>
+<!-- Sector 1: OSSERVA (Top) -->
+<!-- Arc from approx -150 to -30 degrees -->
+<path class="glow-grey" d="M 163.4 100 A 100 100 0 0 1 336.6 100" fill="none" stroke="#E5E5E5" stroke-linecap="butt" stroke-width="25"></path>
+<!-- Decorative line inside -->
+<path d="M 163.4 100 A 100 100 0 0 1 336.6 100" fill="none" stroke="#9CA3AF" stroke-dasharray="2,4" stroke-width="1"></path>
+<!-- REVISED ARCS for correct 3-part cycle -->
+<!-- 1. OSSERVA (Top - Grey) Start Angle: 215, End Angle: 325 -->
+<path class="glow-grey" d="M 151 184 A 130 130 0 0 1 349 184" fill="none" stroke="#D1D5DB" stroke-linecap="round" stroke-width="30"></path>
+<!-- 2. AGISCI (Bottom Right - Orange) Start Angle: 335 (-25), End Angle: 85 -->
+<path class="glow-orange" d="M 360 206 A 130 130 0 0 1 261 379" fill="none" stroke="#FF6200" stroke-linecap="round" stroke-width="30"></path>
+<!-- 3. VALUTA (Bottom Left - Dark Orange) Start Angle: 95, End Angle: 205 -->
+<path class="glow-dark-orange" d="M 239 379 A 130 130 0 0 1 140 206" fill="none" stroke="#F05C00" stroke-linecap="round" stroke-width="30"></path>
+<!-- Connecting Arrows (Grey) -->
+<!-- Osserva -> Agisci -->
+<path d="M 365 170 Q 390 190 380 210" fill="none" marker-end="url(#arrowhead)" opacity="1" stroke="#9CA3AF" stroke-width="2"></path>
+<!-- Agisci -> Valuta -->
+<path d="M 260 395 Q 250 415 230 395" fill="none" marker-end="url(#arrowhead)" opacity="1" stroke="#9CA3AF" stroke-width="2"></path>
+<!-- Valuta -> Osserva -->
+<path d="M 120 210 Q 110 190 135 170" fill="none" marker-end="url(#arrowhead)" opacity="1" stroke="#9CA3AF" stroke-width="2"></path>
+<!-- Icons on Arcs -->
+<!-- Top -->
+<circle cx="250" cy="120" fill="#FFFFFF" r="20" stroke="#E5E5E5" stroke-width="1"></circle>
+<text dominant-baseline="middle" fill="#4B5563" font-family="FontAwesome" font-size="18" text-anchor="middle" x="250" y="120"></text> <!-- Eye -->
+<!-- Bottom Right -->
+<circle cx="360" cy="310" fill="#FFFFFF" r="20" stroke="#FF6200" stroke-width="1"></circle>
+<text dominant-baseline="middle" fill="#FF6200" font-family="FontAwesome" font-size="18" text-anchor="middle" x="360" y="310"></text> <!-- Bolt -->
+<!-- Bottom Left -->
+<circle cx="140" cy="310" fill="#FFFFFF" r="20" stroke="#F05C00" stroke-width="1"></circle>
+<text dominant-baseline="middle" fill="#F05C00" font-family="FontAwesome" font-size="18" text-anchor="middle" x="140" y="310"></text> <!-- Check Circle -->
+</svg>
+</div>
+<!-- Text Blocks Positioning -->
+<!-- 1. OSSERVA (Top Center) -->
+<div class="absolute top-0 left-1/2 transform -translate-x-1/2 -mt-2 w-80 info-card border-gray-400 p-4 rounded-r-lg rounded-bl-lg">
+<div class="flex items-center mb-2">
+<span class="font-mono text-xs text-gray-500 mr-2">PHASE_01</span>
+<h3 class="font-poppins font-bold text-xl text-gray-900">OSSERVA</h3>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug">
+<span class="text-gray-900 font-semibold">Context Engineering + Analisi.</span><br/>
+                    Prima di toccare codice: capisci il problema, raccogli contesto, struttura le informazioni.
+                </p>
+</div>
+<!-- 2. AGISCI (Bottom Right) -->
+<div class="absolute bottom-16 right-16 w-80 info-card border-[#FF6200] p-4 rounded-l-lg rounded-br-lg">
+<div class="flex items-center mb-2">
+<span class="font-mono text-xs text-[#FF6200] mr-2">PHASE_02</span>
+<h3 class="font-poppins font-bold text-xl text-gray-900">AGISCI</h3>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug">
+<span class="text-[#FF6200] font-semibold">L'IA come moltiplicatore x10.</span><br/>
+                    Agentic Patterns, prototipazione rapida, code generation assistita.
+                </p>
+<div class="mt-2 flex space-x-2">
+<span class="text-[10px] bg-[#FF6200] bg-opacity-10 text-[#FF6200] px-2 py-0.5 rounded border border-[#FF6200] border-opacity-30">SPEED</span>
+<span class="text-[10px] bg-[#FF6200] bg-opacity-10 text-[#FF6200] px-2 py-0.5 rounded border border-[#FF6200] border-opacity-30">SCALE</span>
+</div>
+</div>
+<!-- 3. VALUTA (Bottom Left) -->
+<div class="absolute bottom-16 left-16 w-80 info-card border-[#F05C00] p-4 rounded-r-lg rounded-bl-lg text-right">
+<div class="flex items-center justify-end mb-2">
+<h3 class="font-poppins font-bold text-xl text-gray-900">VALUTA</h3>
+<span class="font-mono text-xs text-[#F05C00] ml-2">PHASE_03</span>
+</div>
+<p class="font-inter text-sm text-gray-600 leading-snug">
+<span class="text-[#F05C00] font-semibold">Code Defense &amp; Human-in-the-Loop.</span><br/>
+                    Ogni output viene decostruito e difeso. Se non regge, si torna a OSSERVA.
+                </p>
+<div class="mt-2 flex justify-end space-x-2">
+<span class="text-[10px] bg-[#F05C00] bg-opacity-10 text-[#F05C00] px-2 py-0.5 rounded border border-[#F05C00] border-opacity-30">QUALITY</span>
+<span class="text-[10px] bg-[#F05C00] bg-opacity-10 text-[#F05C00] px-2 py-0.5 rounded border border-[#F05C00] border-opacity-30">SAFETY</span>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-4 left-12 flex items-center space-x-2 opacity-60">
+<div class="h-1 w-8 bg-[#FF6200]"></div>
+<p class="font-mono text-[10px] text-gray-500">CONTINUOUS_IMPROVEMENT_CYCLE</p>
+</div>
+</div>
+</body>
+</html>
