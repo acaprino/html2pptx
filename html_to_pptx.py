@@ -194,7 +194,7 @@ JS = r"""() => {
         const s = getComputedStyle(el);
         return s.display !== 'none' && s.visibility !== 'hidden' && parseFloat(s.opacity) > 0.01;
     }
-    function inl(el) { return getComputedStyle(el).display.startsWith('inline'); }
+    function inl(el) { return getComputedStyle(el).display === 'inline'; }
     function isFA(el) {
         if (!el.classList) return false;
         return ['fas','far','fab','fa-solid','fa'].some(function(cn) { return el.classList.contains(cn); });
