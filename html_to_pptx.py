@@ -163,6 +163,46 @@ PREPROCESS_JS = r"""() => {
 }"""
 
 
+# ── Hide/restore helpers for clean element screenshots ────────────────
+# Before screenshotting an SVG or icon, hide all non-ancestor siblings
+# so overlapping HTML content doesn't bleed into the captured image.
+# Uses visibility:hidden (preserves layout, no reflow).
+
+HIDE_FOR_SCREENSHOT_JS = r"""(selector) => {
+    var target = document.querySelector(selector);
+    if (!target) return 0;
+    var hidden = [];
+    var savedVis = [];
+    var current = target;
+    while (current && current.parentElement) {
+        var parent = current.parentElement;
+        for (var i = 0; i < parent.children.length; i++) {
+            var sib = parent.children[i];
+            if (sib !== current) {
+                savedVis.push(sib.style.visibility);
+                hidden.push(sib);
+                sib.style.visibility = 'hidden';
+            }
+        }
+        current = parent;
+        if (current === document.documentElement) break;
+    }
+    window.__ssHidden = hidden;
+    window.__ssSavedVis = savedVis;
+    return hidden.length;
+}"""
+
+RESTORE_AFTER_SCREENSHOT_JS = r"""() => {
+    var h = window.__ssHidden || [];
+    var v = window.__ssSavedVis || [];
+    for (var i = 0; i < h.length; i++) {
+        h[i].style.visibility = v[i] || '';
+    }
+    window.__ssHidden = null;
+    window.__ssSavedVis = null;
+}"""
+
+
 # ── JavaScript DOM extraction (executed inside Playwright browser) ───
 
 JS = r"""() => {
@@ -464,9 +504,15 @@ def screenshot_elements(page, data, tmpdir):
         loc = page.locator(f'[data-si="{si}"]')
         if loc.count() > 0:
             try:
+                page.evaluate(HIDE_FOR_SCREENSHOT_JS, f'[data-si="{si}"]')
                 loc.first.screenshot(path=p)
+                page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
                 imgs.append({**svg, 'path': p})
             except Exception as e:
+                try:
+                    page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
+                except Exception:
+                    pass
                 print(f"  WARN: screenshot failed for svg {si}: {e}", file=sys.stderr)
     for icon in data.get('icons', []):
         fi = int(icon['i'])
@@ -474,9 +520,15 @@ def screenshot_elements(page, data, tmpdir):
         loc = page.locator(f'[data-fi="{fi}"]')
         if loc.count() > 0:
             try:
+                page.evaluate(HIDE_FOR_SCREENSHOT_JS, f'[data-fi="{fi}"]')
                 loc.first.screenshot(path=p)
+                page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
                 imgs.append({**icon, 'path': p})
             except Exception as e:
+                try:
+                    page.evaluate(RESTORE_AFTER_SCREENSHOT_JS)
+                except Exception:
+                    pass
                 print(f"  WARN: screenshot failed for icon {fi}: {e}", file=sys.stderr)
     return imgs
 
