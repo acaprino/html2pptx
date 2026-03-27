@@ -37,7 +37,7 @@ FONT_MAP = {
     'Roboto Mono': 'Consolas',
 }
 
-TAILWIND_CDN = '<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>'
+TAILWIND_CDN = '<script src="https://cdn.tailwindcss.com/3.4.17?plugins=forms,typography"></script>'
 
 # Fix flex overflow: flex-1 items have min-height:auto by default, which prevents
 # shrinking below content size. This causes content to overflow fixed-height containers.
@@ -604,6 +604,8 @@ def _add_image(slide, img):
 # ── Main ──────────────────────────────────────────────────────────────
 
 def main():
+    global VP_W, VP_H, SLIDE_W, SLIDE_H, SCALE
+
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
 
@@ -622,10 +624,9 @@ def main():
     output = Path(args.output)
 
     # Update globals so px(), build_slide(), etc. use the right dimensions
-    global VP_W, VP_H, SLIDE_W, SLIDE_H, SCALE
-    VP_W, VP_H = args.width, args.height
-    if VP_W <= 0 or VP_H <= 0:
+    if args.width <= 0 or args.height <= 0:
         parser.error("--width and --height must be positive integers")
+    VP_W, VP_H = args.width, args.height
     SLIDE_H = Inches(7.5)
     SLIDE_W = Inches(7.5 * VP_W / VP_H)  # preserve aspect ratio
     SCALE = SLIDE_W / VP_W
@@ -643,7 +644,10 @@ def main():
 
     with tempfile.TemporaryDirectory() as tmpdir:
         with sync_playwright() as pw:
-            browser = pw.chromium.launch()
+            browser = pw.chromium.launch(args=[
+                '--disable-extensions',
+                '--disable-background-networking',
+            ])
             try:
                 page = browser.new_page(viewport={"width": VP_W, "height": VP_H})
 
@@ -663,9 +667,12 @@ def main():
                     temp_html = Path(tmpdir) / f"slide_{idx}.html"
                     temp_html.write_text(patched, encoding='utf-8')
 
-                    page.goto(f"file:///{temp_html.resolve().as_posix()}")
-                    page.wait_for_load_state("networkidle")
-                    page.wait_for_timeout(500)  # Tailwind JIT compile time
+                    page.goto(f"file:///{temp_html.resolve().as_posix()}", wait_until="domcontentloaded")
+                    try:
+                        page.wait_for_load_state("networkidle", timeout=10000)
+                    except Exception:
+                        pass  # Best-effort: proceed if networkidle hangs (e.g. persistent connections)
+                    page.wait_for_timeout(500)  # Tailwind JIT compile time after network settles
 
                     data = page.evaluate(JS)
                     if not data:
@@ -690,10 +697,10 @@ def main():
         fallback = output.with_suffix('.partial.pptx')
         try:
             prs.save(str(fallback))
-            print(f"\nERROR saving {output.name}: {e}", file=sys.stderr)
+            print(f"\nERROR saving {output.name}: {type(e).__name__}", file=sys.stderr)
             print(f"Partial output saved: {fallback.name}")
         except Exception as e2:
-            print(f"\nERROR: unable to save any output: {e}; fallback also failed: {e2}", file=sys.stderr)
+            print(f"\nERROR: unable to save any output: {type(e).__name__}; fallback: {type(e2).__name__}", file=sys.stderr)
             sys.exit(1)
         return
     kb = output.stat().st_size // 1024
