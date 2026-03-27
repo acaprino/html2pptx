@@ -20,7 +20,7 @@ if not defined PYTHON (
 echo Using: %PYTHON%
 echo.
 
-%PYTHON% html_to_pptx.py -i presentazione_html
+%PYTHON% html_to_pptx.py -i presentazione_html -s 6
 if %ERRORLEVEL% NEQ 0 goto :error
 
 if not exist "Slides1.pptx" (
