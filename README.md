@@ -19,7 +19,7 @@ html2pptx renders your HTML slides in headless Chromium, extracts every DOM elem
 
 - **Native elements** — Text stays editable, shapes stay resizable. No giant images per slide.
 - **Pixel-perfect positioning** — DOM coordinates are converted to PPTX EMUs with exact scale factors.
-- **Font-aware** — Web fonts (Poppins, Inter, Roboto Mono) are mapped to Windows fallbacks with width-compensation ratios computed via fonttools.
+- **Font-aware** — Web fonts are measured against system fallbacks in the browser at runtime, with width-compensation ratios that prevent text overflow in PowerPoint.
 - **Works with any HTML** — Smart container detection finds the slide root automatically. Tailwind, vanilla CSS, whatever.
 - **Configurable aspect ratio** — 16:9, 4:3, or any custom viewport. Slide dimensions adapt automatically.
 
@@ -68,18 +68,15 @@ On Windows, `run.bat` runs the converter and opens the result in PowerPoint auto
 <summary><b>How it works</b></summary>
 
 1. **Render** — Each `.html` file is loaded in headless Chromium via Playwright
-2. **Extract** — JavaScript traverses the DOM and collects positions, sizes, colors, fonts, borders, and z-order for every visible element
-3. **Map fonts** — Web fonts are mapped to Windows system fonts with width-compensation ratios (e.g., Poppins → Segoe UI at 1.137x)
-4. **Build PPTX** — python-pptx creates native shapes, text boxes, and images at the exact pixel positions, scaled to slide EMUs
-5. **Handle edge cases** — SVGs and icon fonts are screenshotted and embedded as images. Tailwind v2 CSS is auto-patched to the Play CDN for arbitrary value support. Overflow is clipped to slide boundaries.
+2. **Preprocess** — DOM is simplified in-place (e.g., `<br>` tags are flattened into block-level wrappers)
+3. **Extract** — JavaScript traverses the DOM and collects positions, sizes, colors, fonts, borders, border-radius, and z-order for every visible element
+4. **Map fonts** — Web fonts are measured against system fallbacks in the browser; ratios adjust text box widths to prevent overflow
+5. **Build PPTX** — python-pptx creates native shapes (rectangles, rounded rectangles, ovals), text boxes, and images at the exact pixel positions, scaled to slide EMUs
+6. **Handle edge cases** — SVGs and icon fonts are screenshotted and embedded as images. Tailwind v2 CSS is auto-patched to the Play CDN for arbitrary value support. Overflow is clipped to slide boundaries.
 
 ### Container Detection
 
-The converter finds the slide root via cascade:
-1. `.w-[1280px]` (Tailwind arbitrary width)
-2. `[class*="1280"]` (any class containing the viewport width)
-3. Largest visible direct child of `<body>` by area
-4. `document.body` as fallback
+The converter finds the slide root by scanning visible direct children of `<body>` and selecting the one with the largest bounding area. No CSS selectors or class names are used -- the algorithm is purely geometric.
 
 This means it works with any HTML structure, not just Tailwind-based slides.
 
