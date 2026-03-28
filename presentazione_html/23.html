@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>L'Utilizzo Consapevole della AI nel Mondo IT</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-mono { font-family: 'Roboto Mono', monospace; }
+
+    .spectrum-bar {
+        background: linear-gradient(90deg, #DC2626 0%, #F59E0B 35%, #10B981 70%, #FF6200 100%);
+        border-radius: 9999px;
+    }
+
+    .card-accent {
+        border-left: 4px solid #FF6200;
+    }
+</style>
+</head>
+<body class="m-0 p-0 overflow-hidden bg-white text-gray-900">
+<div class="w-[1280px] h-[720px] bg-white relative flex flex-col p-12 overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex justify-between items-start mb-6 z-10">
+        <div>
+            <h1 class="font-poppins font-bold text-4xl text-gray-900 mb-1">
+                L'Utilizzo Consapevole della AI <span class="text-[#FF6200]">nel Mondo IT</span>
+            </h1>
+            <p class="font-inter text-xl text-gray-500 font-light">
+                Non se usarla, ma come usarla. Lo spettro tra rischio e vantaggio competitivo.
+            </p>
+        </div>
+        <div>
+            <p class="font-poppins font-bold text-sm tracking-wider text-gray-400">VISION DAY <span class="text-[#FF6200]">AGENDA</span></p>
+        </div>
+    </div>
+
+    <!-- Spectrum Bar -->
+    <div class="mb-8 z-10">
+        <div class="flex justify-between mb-2">
+            <span class="font-mono text-xs text-red-500 uppercase tracking-wide font-bold">Uso Incosciente</span>
+            <span class="font-mono text-xs text-[#FF6200] uppercase tracking-wide font-bold">Uso Consapevole</span>
+        </div>
+        <div class="spectrum-bar h-3 w-full"></div>
+        <div class="flex justify-between mt-2">
+            <span class="font-inter text-xs text-gray-400">Copia-incolla cieco</span>
+            <span class="font-inter text-xs text-gray-400">Delega totale</span>
+            <span class="font-inter text-xs text-gray-400">Validazione attiva</span>
+            <span class="font-inter text-xs text-gray-400">Padronanza strategica</span>
+        </div>
+    </div>
+
+    <!-- Main Content: 4 pillars -->
+    <div class="flex-1 grid grid-cols-4 gap-5 z-10 pb-4">
+
+        <!-- Card 1: Code Generation -->
+        <div class="bg-gray-50 rounded-xl p-6 card-accent flex flex-col">
+            <div class="w-12 h-12 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center mb-4">
+                <i class="fas fa-code text-xl text-[#FF6200]"></i>
+            </div>
+            <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">Generazione Codice</h3>
+            <p class="font-inter text-sm text-gray-600 leading-relaxed flex-1">
+                L'AI scrive codice velocemente, ma senza architettura mentale si accumula debito tecnico invisibile.
+            </p>
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <p class="font-mono text-xs text-[#FF6200]"><i class="fas fa-key mr-1"></i> Capire prima, generare poi</p>
+            </div>
+        </div>
+
+        <!-- Card 2: Testing & QA -->
+        <div class="bg-gray-50 rounded-xl p-6 card-accent flex flex-col">
+            <div class="w-12 h-12 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center mb-4">
+                <i class="fas fa-vial text-xl text-[#FF6200]"></i>
+            </div>
+            <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">Testing & QA</h3>
+            <p class="font-inter text-sm text-gray-600 leading-relaxed flex-1">
+                Test generati dall'AI coprono il caso felice. I bug reali vivono nei casi limite che solo l'esperienza conosce.
+            </p>
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <p class="font-mono text-xs text-[#FF6200]"><i class="fas fa-key mr-1"></i> AI propone, l'esperto dispone</p>
+            </div>
+        </div>
+
+        <!-- Card 3: Operations -->
+        <div class="bg-gray-50 rounded-xl p-6 card-accent flex flex-col">
+            <div class="w-12 h-12 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center mb-4">
+                <i class="fas fa-server text-xl text-[#FF6200]"></i>
+            </div>
+            <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">Infra & Operations</h3>
+            <p class="font-inter text-sm text-gray-600 leading-relaxed flex-1">
+                Automazione IaC, monitoring predittivo, incident response. L'AI accelera, ma servono guardrail umani.
+            </p>
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <p class="font-mono text-xs text-[#FF6200]"><i class="fas fa-key mr-1"></i> Automatizza, ma sorveglia</p>
+            </div>
+        </div>
+
+        <!-- Card 4: Architecture -->
+        <div class="bg-gray-50 rounded-xl p-6 card-accent flex flex-col">
+            <div class="w-12 h-12 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center mb-4">
+                <i class="fas fa-sitemap text-xl text-[#FF6200]"></i>
+            </div>
+            <h3 class="font-poppins font-bold text-lg text-gray-900 mb-2">Architettura & Design</h3>
+            <p class="font-inter text-sm text-gray-600 leading-relaxed flex-1">
+                Le decisioni architetturali richiedono contesto di business. L'AI non ha il quadro completo: tu sì.
+            </p>
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <p class="font-mono text-xs text-[#FF6200]"><i class="fas fa-key mr-1"></i> Tu decidi, l'AI esegue</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-between items-center z-10">
+        <div class="flex items-center space-x-2">
+            <div class="h-1 w-12 bg-[#FF6200] rounded-full"></div>
+            <p class="font-mono text-[10px] text-gray-400">AI_CONSCIOUS_USE // VISION_DAY_2026</p>
+        </div>
+        <p class="font-poppins font-bold text-sm tracking-wider text-gray-400">TRI-TECH <span class="text-[#FF6200]">SOLUTIONS</span></p>
+    </div>
+
+</div>
+</body>
+</html>

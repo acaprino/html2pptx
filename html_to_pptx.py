@@ -4,7 +4,9 @@ html_to_pptx.py - Parse HTML slides into native PPTX elements.
 
 Renders each HTML in Playwright, extracts DOM element positions and
 computed styles via JavaScript, creates python-pptx shapes and textboxes.
-SVGs and Font Awesome icons are screenshotted and embedded as images.
+SVGs are converted to native PPTX shapes when possible (circle, rect, line,
+path, polygon, text); complex SVGs fall back to screenshot.
+Font Awesome icons are screenshotted and embedded as images.
 """
 import argparse, os, re, sys, tempfile
 from pathlib import Path
@@ -14,6 +16,7 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_AUTO_SIZE
 from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.dml import MSO_LINE_DASH_STYLE
 
 BASE = Path(__file__).resolve().parent
 HTML_DIR = BASE / "presentazione_html"
@@ -244,7 +247,7 @@ JS = r"""() => {
     const out = {
         bg: getComputedStyle(c).backgroundColor,
         bodyBg: getComputedStyle(document.body).backgroundColor,
-        shapes: [], texts: [], svgs: [], icons: []
+        shapes: [], texts: [], svgs: [], icons: [], nativeSvgs: []
     };
 
     // Tag SVGs and FA icons with data attributes for later screenshotting
@@ -278,6 +281,141 @@ JS = r"""() => {
         };
     }
 
+    // ── SVG native extraction helpers ──
+    function svgStyle(child) {
+        var cs = getComputedStyle(child);
+        var fill = cs.fill || '';
+        var stroke = cs.stroke || '';
+        var sw = parseFloat(cs.strokeWidth) || 0;
+        var da = cs.strokeDasharray || '';
+        var op = parseFloat(cs.opacity);
+        if (isNaN(op)) op = 1;
+        var fop = parseFloat(cs.fillOpacity);
+        if (isNaN(fop)) fop = 1;
+        var sop = parseFloat(cs.strokeOpacity);
+        if (isNaN(sop)) sop = 1;
+        var hasFill = fill && fill !== 'none' && fill.indexOf('url(') < 0;
+        var hasStroke = stroke && stroke !== 'none' && sw > 0 && stroke.indexOf('url(') < 0;
+        return {
+            fill: hasFill ? fill : null,
+            stroke: hasStroke ? stroke : null,
+            strokeWidth: hasStroke ? sw : 0,
+            dashed: da && da !== 'none',
+            opacity: op,
+            fillOpacity: fop,
+            strokeOpacity: sop
+        };
+    }
+
+    function transformPt(ctm, px, py) {
+        return [ctm.a * px + ctm.c * py + ctm.e - ox,
+                ctm.b * px + ctm.d * py + ctm.f - oy];
+    }
+
+    function extractSvgNative(svgEl, baseDp, baseSeq) {
+        var sr = svgEl.getBoundingClientRect();
+        // Skip full-slide decorative SVGs
+        if (sr.width > cr.width * 0.8 && sr.height > cr.height * 0.8) return null;
+        // Skip SVGs with unconvertible features
+        var blockers = svgEl.querySelectorAll('pattern, clipPath, mask, filter, foreignObject, image, use');
+        if (blockers.length > 0) return null;
+
+        var prims = svgEl.querySelectorAll('circle, ellipse, rect, line, path, polygon, polyline, text');
+        var elements = [];
+
+        for (var i = 0; i < prims.length; i++) {
+            var child = prims[i];
+            // Skip elements inside <defs> or <marker> (definitions, not rendered)
+            if (child.closest('defs') || child.closest('marker')) continue;
+            var ccs = getComputedStyle(child);
+            if (ccs.display === 'none' || ccs.visibility === 'hidden') continue;
+            if (parseFloat(ccs.opacity) < 0.01) continue;
+
+            var tag = child.tagName.toLowerCase();
+            var style = svgStyle(child);
+            // Skip fully invisible elements (no fill and no stroke)
+            if (!style.fill && !style.stroke) continue;
+            var br = child.getBoundingClientRect();
+            if (br.width < 0.5 && br.height < 0.5) continue;
+            if (elements.length >= 500) break;  // cap total primitives per SVG
+            var base = {
+                type: tag,
+                x: br.left - ox, y: br.top - oy,
+                w: br.width, h: br.height,
+                dp: baseDp, seq: baseSeq + elements.length
+            };
+            // Merge style into base
+            base.fill = style.fill; base.stroke = style.stroke;
+            base.strokeWidth = style.strokeWidth; base.dashed = style.dashed;
+            base.opacity = style.opacity; base.fillOpacity = style.fillOpacity;
+            base.strokeOpacity = style.strokeOpacity;
+
+            if (tag === 'circle' || tag === 'ellipse' || tag === 'rect') {
+                if (tag === 'rect') {
+                    var rx = parseFloat(child.getAttribute('rx')) || 0;
+                    base.rx = rx;
+                }
+                elements.push(base);
+
+            } else if (tag === 'line') {
+                var ctm = child.getScreenCTM();
+                if (!ctm) return null;
+                var x1 = child.x1.baseVal.value, y1 = child.y1.baseVal.value;
+                var x2 = child.x2.baseVal.value, y2 = child.y2.baseVal.value;
+                base.points = [transformPt(ctm, x1, y1), transformPt(ctm, x2, y2)];
+                base.closed = false;
+                elements.push(base);
+
+            } else if (tag === 'path') {
+                try {
+                    var totalLen = child.getTotalLength();
+                    if (totalLen < 0.5) continue;  // degenerate
+                    var ctm = child.getScreenCTM();
+                    if (!ctm) return null;
+                    var nPts = Math.max(4, Math.min(200, Math.round(totalLen / 3)));
+                    var pts = [];
+                    for (var j = 0; j <= nPts; j++) {
+                        var pt = child.getPointAtLength(totalLen * j / nPts);
+                        pts.push(transformPt(ctm, pt.x, pt.y));
+                    }
+                    base.points = pts;
+                    var d = child.getAttribute('d') || '';
+                    base.closed = /[zZ]\s*$/.test(d.trim());
+                    elements.push(base);
+                } catch(e) { return null; }
+
+            } else if (tag === 'polygon' || tag === 'polyline') {
+                var ctm = child.getScreenCTM();
+                if (!ctm) return null;
+                var plist = child.points;
+                if (!plist || plist.numberOfItems < 2) continue;
+                if (plist.numberOfItems > 200) return null;  // too complex for native
+                var pts = [];
+                for (var j = 0; j < plist.numberOfItems; j++) {
+                    var pt = plist.getItem(j);
+                    pts.push(transformPt(ctm, pt.x, pt.y));
+                }
+                base.points = pts;
+                base.closed = (tag === 'polygon');
+                elements.push(base);
+
+            } else if (tag === 'text') {
+                var ff = ccs.fontFamily || '';
+                // Skip FontAwesome glyphs (won't render without the font)
+                if (ff.toLowerCase().indexOf('fontawesome') >= 0 ||
+                    ff.toLowerCase().indexOf('font awesome') >= 0) continue;
+                base.text = child.textContent || '';
+                base.fontFamily = ff.split(',')[0].replace(/['"]/g, '').trim();
+                base.fontSize = parseFloat(ccs.fontSize) || 16;
+                base.fontWeight = parseInt(ccs.fontWeight) || 400;
+                base.textAnchor = child.getAttribute('text-anchor') || ccs.textAnchor || 'start';
+                elements.push(base);
+            }
+        }
+        if (elements.length === 0) return null;
+        return { elements: elements, dp: baseDp, seq: baseSeq };
+    }
+
     // seq: monotonic insertion counter for stable sort across element types
     var seq = 0;
     var dp = 0;
@@ -288,10 +426,18 @@ JS = r"""() => {
         var rect = gr(el);
         var cs = getComputedStyle(el);
 
-        // SVG -> record for screenshot
+        // SVG -> try native extraction, fall back to screenshot
         if (tag === 'svg' || tag === 'SVG') {
             var si = el.getAttribute('data-si');
-            if (si !== null) out.svgs.push({ x: rect.x, y: rect.y, w: rect.w, h: rect.h, dp: dp, seq: seq++, i: parseInt(si) });
+            if (si !== null) {
+                var native = extractSvgNative(el, dp, seq);
+                if (native) {
+                    out.nativeSvgs.push(native);
+                    seq += native.elements.length;
+                } else {
+                    out.svgs.push({ x: rect.x, y: rect.y, w: rect.w, h: rect.h, dp: dp, seq: seq++, i: parseInt(si) });
+                }
+            }
             return;
         }
         // Font Awesome icon -> record for screenshot
@@ -582,10 +728,17 @@ def build_slide(prs, data, images):
         elems.append(('text', (t.get('dp', 0), t.get('seq', 0)), t))
     for i in images:
         elems.append(('image', (i.get('dp', 0), i.get('seq', 0)), i))
+    for nsvg in data.get('nativeSvgs', []):
+        elems.append(('nativesvg', (nsvg.get('dp', 0), nsvg.get('seq', 0)), nsvg))
 
     # Clip elements to slide boundaries (HTML uses overflow:hidden)
     clipped = []
     for etype, sort_key, ed in elems:
+        # nativesvg entries are container objects without x/y/w/h;
+        # their child elements handle coordinates individually
+        if etype == 'nativesvg':
+            clipped.append((etype, sort_key, ed))
+            continue
         ey = ed.get('y', 0)
         eh = ed.get('h', 0)
         ex = ed.get('x', 0)
@@ -628,6 +781,8 @@ def build_slide(prs, data, images):
                 _add_text(slide, ed, font_ratios)
             elif etype == 'image':
                 _add_image(slide, ed)
+            elif etype == 'nativesvg':
+                _add_native_svg(slide, ed, font_ratios)
         except Exception as e:
             print(f"  WARN: skipped {etype}: {e}", file=sys.stderr)
 
@@ -810,6 +965,135 @@ def _add_image(slide, img):
     slide.shapes.add_picture(path, px(img['x']), px(img['y']), px(img['w']), px(img['h']))
 
 
+# ── Native SVG rendering ─────────────────────────────────────────────
+
+def _apply_svg_style(shape, elem):
+    """Apply SVG fill/stroke/opacity to a PPTX shape."""
+    fill_color = parse_rgba(elem.get('fill'))
+    stroke_color = parse_rgba(elem.get('stroke'))
+    stroke_w = elem.get('strokeWidth', 0) or 0
+    opacity = elem.get('opacity', 1.0)
+    fill_op = elem.get('fillOpacity', 1.0)
+
+    if fill_color and fill_color[3] * fill_op * opacity >= 0.05:
+        shape.fill.solid()
+        shape.fill.fore_color.rgb = to_rgb(fill_color)
+    else:
+        shape.fill.background()
+
+    stroke_op = elem.get('strokeOpacity', 1.0)
+    if stroke_color and stroke_w > 0 and stroke_color[3] * stroke_op * opacity >= 0.05:
+        shape.line.color.rgb = to_rgb(stroke_color)
+        shape.line.width = Pt(stroke_w * 0.75)
+        if elem.get('dashed'):
+            shape.line.dash_style = MSO_LINE_DASH_STYLE.DASH
+    else:
+        shape.line.fill.background()
+
+
+def _add_svg_circle(slide, elem):
+    x, y, w, h = elem['x'], elem['y'], elem['w'], elem['h']
+    if w < 2 or h < 2:
+        return
+    shp = slide.shapes.add_shape(MSO_SHAPE.OVAL, px(x), px(y), px(w), px(h))
+    _apply_svg_style(shp, elem)
+
+
+def _add_svg_rect(slide, elem):
+    x, y, w, h = elem['x'], elem['y'], elem['w'], elem['h']
+    if w < 2 or h < 2:
+        return
+    rx = elem.get('rx', 0)
+    shape_type = MSO_SHAPE.ROUNDED_RECTANGLE if rx > 2 else MSO_SHAPE.RECTANGLE
+    shp = slide.shapes.add_shape(shape_type, px(x), px(y), px(w), px(h))
+    _apply_svg_style(shp, elem)
+
+
+def _add_svg_freeform(slide, elem):
+    """Render line/path/polygon/polyline from sampled point arrays."""
+    points = elem.get('points', [])
+    if len(points) < 2:
+        return
+    closed = elem.get('closed', False)
+
+    # Compute bounding box; skip degenerate shapes (all points at same pixel)
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    min_x, min_y = min(xs), min(ys)
+    if max(xs) - min_x < 0.5 and max(ys) - min_y < 0.5:
+        return
+
+    # Local coordinates relative to bounding box origin
+    local = [(round(p[0] - min_x), round(p[1] - min_y)) for p in points]
+
+    fb = slide.shapes.build_freeform(
+        start_x=local[0][0], start_y=local[0][1], scale=SCALE
+    )
+    fb.add_line_segments(local[1:], close=closed)
+
+    shape = fb.convert_to_shape(
+        origin_x=px(min_x), origin_y=px(min_y)
+    )
+    _apply_svg_style(shape, elem)
+
+
+def _add_svg_text(slide, elem, font_ratios=None):
+    text = (elem.get('text') or '').strip()
+    if not text:
+        return
+    x, y, w, h = elem['x'], elem['y'], elem['w'], elem['h']
+    # Font-aware width compensation (match _add_text pattern)
+    ff = elem.get('fontFamily', 'Segoe UI')
+    if font_ratios is None:
+        font_ratios = {}
+    measured = font_ratios.get(ff, {})
+    ratio = measured.get('r', FONT_RATIOS.get(ff, 1.0))
+    fallback_factor = (1.0 / ratio) * 1.05
+    pad = 4
+    w_use = w * fallback_factor
+    txBox = slide.shapes.add_textbox(px(x - pad), px(y), px(w_use + pad * 2), px(h))
+    tf = txBox.text_frame
+    tf.auto_size = MSO_AUTO_SIZE.NONE
+    tf.word_wrap = False
+    p = tf.paragraphs[0]
+
+    anchor = elem.get('textAnchor', 'start')
+    if anchor == 'middle':
+        p.alignment = PP_ALIGN.CENTER
+    elif anchor == 'end':
+        p.alignment = PP_ALIGN.RIGHT
+    else:
+        p.alignment = PP_ALIGN.LEFT
+
+    r = p.add_run()
+    r.text = text
+    ff = elem.get('fontFamily', 'Segoe UI')
+    r.font.name = FONT_MAP.get(ff, ff)
+    fs = elem.get('fontSize', 16) or 16
+    r.font.size = Pt(fs * 0.75)
+    r.font.bold = elem.get('fontWeight', 400) >= 600
+    fill_c = parse_rgba(elem.get('fill'))
+    if fill_c:
+        r.font.color.rgb = to_rgb(fill_c)
+
+
+def _add_native_svg(slide, svg_data, font_ratios=None):
+    """Render extracted SVG primitives as native PPTX shapes."""
+    for elem in svg_data.get('elements', []):
+        try:
+            etype = elem.get('type')
+            if etype in ('circle', 'ellipse'):
+                _add_svg_circle(slide, elem)
+            elif etype == 'rect':
+                _add_svg_rect(slide, elem)
+            elif etype in ('line', 'path', 'polygon', 'polyline'):
+                _add_svg_freeform(slide, elem)
+            elif etype == 'text':
+                _add_svg_text(slide, elem, font_ratios)
+        except Exception as e:
+            print(f"  WARN: skipped SVG {etype}: {e}", file=sys.stderr)
+
+
 # ── Main ──────────────────────────────────────────────────────────────
 
 def main():
@@ -920,7 +1204,9 @@ def main():
                     ns = len(data.get('shapes', []))
                     nt = len(data.get('texts', []))
                     ni = len(images)
-                    print(f"{ns} shapes, {nt} texts, {ni} imgs")
+                    nn = sum(len(ns_.get('elements', [])) for ns_ in data.get('nativeSvgs', []))
+                    svg_info = f", {nn} svg" if nn else ""
+                    print(f"{ns} shapes, {nt} texts, {ni} imgs{svg_info}")
             finally:
                 browser.close()
 
