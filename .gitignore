@@ -9,6 +9,40 @@ _*.png
 # Python bytecode
 __pycache__/
 *.pyc
+*.pyo
 
 # Comparison artifacts
 comparison/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+.python-version
+
+# Build / packaging
+*.egg-info/
+dist/
+build/
+
+# Test / lint caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.bak
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Review-pipeline workspaces
+.team-review/
+.deep-dive/
+.claude/

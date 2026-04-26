@@ -1,7 +1,8 @@
 @echo off
-title Tri-Tech TIA - HTML to PPTX
+setlocal
+title html2pptx - HTML to PPTX
 echo ========================================
-echo   Tri-Tech TIA - HTML to PPTX Converter
+echo   html2pptx - HTML to PPTX Converter
 echo ========================================
 echo.
 
@@ -10,9 +11,8 @@ cd /d "%~dp0"
 set PYTHON=
 where python >nul 2>nul && set PYTHON=python
 if not defined PYTHON where py >nul 2>nul && set PYTHON=py -3
-if not defined PYTHON if exist "C:\Program Files\Python313\python.exe" set PYTHON="C:\Program Files\Python313\python.exe"
 if not defined PYTHON (
-    echo [ERROR] Python not found. Install Python 3.13+ from https://python.org
+    echo [ERROR] Python not found in PATH. Install Python 3.10+ from https://python.org
     pause
     exit /b 1
 )
@@ -20,8 +20,17 @@ if not defined PYTHON (
 echo Using: %PYTHON%
 echo.
 
-%PYTHON% html_to_pptx.py -i presentazione_html -s 6
-if %ERRORLEVEL% NEQ 0 goto :error
+%PYTHON% html_to_pptx.py -i presentazione_html -s 3
+set RC=%ERRORLEVEL%
+
+REM Distinguish exit codes: 0=success, 2=partial save, other=hard failure.
+if %RC% EQU 2 (
+    echo.
+    echo [WARNING] Partial save - check .partial.pptx alongside the requested output.
+    pause
+    exit /b 2
+)
+if %RC% NEQ 0 goto :error
 
 if not exist "Slides1.pptx" (
     echo [WARNING] Slides1.pptx was not created.
@@ -37,6 +46,6 @@ exit /b 0
 
 :error
 echo.
-echo [ERROR] Conversion failed.
+echo [ERROR] Conversion failed (exit code %RC%).
 pause
-exit /b 1
+exit /b %RC%

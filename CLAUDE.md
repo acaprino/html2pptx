@@ -1,94 +1,137 @@
-# CLAUDE.md -- Tri-Tech TIA Presentation Tools
+# CLAUDE.md -- html2pptx
 
 ## Project Purpose
 
-HTML-to-PPTX converter -- originally built for Tri-Tech IA (TIA), now generic.
-Core tool: `html_to_pptx.py` -- parses HTML slides via Playwright, extracts DOM positions/styles, creates native PPTX elements via python-pptx.
+Convert HTML slides to native PPTX (editable shapes / text, not screenshots).
+Single-module Python tool: `html_to_pptx.py`. Renders each HTML in a headless
+Chromium via Playwright, extracts DOM positions and computed styles via
+injected JavaScript, then emits python-pptx native shapes, textboxes, and
+embedded images.
+
+Also importable as a library: `from html_to_pptx import convert`.
 
 ## Key Files
 
-- `html_to_pptx.py` -- Main converter (Playwright + python-pptx). THE active development focus.
-- `presentazione_html/*.html` -- TIA source slides (1280x720, Tailwind CSS + Google Fonts), 22 slides (1.html - 22.html)
-- `run.bat` -- Launcher: runs html_to_pptx.py and opens output in PowerPoint
+- `html_to_pptx.py` -- main module. CLI + library entry point `convert(...)`.
+- `presentazione_html/*.html` -- sample slides (1280x720, Tailwind CSS, Google Fonts).
+- `pyproject.toml` -- pinned dependencies and console-script entry point.
+- `run.bat` / `run.sh` -- platform launchers (forward to the Python CLI).
+- `.gitignore` -- excludes generated PPTX/PDFs, virtualenvs, IDE folders, review-pipeline workspaces.
 
 ## Tech Stack
 
-- Python 3.13, Playwright (Chromium), python-pptx
-- TIA slides use: Tailwind CSS (v2 CDN, patched to Play CDN at runtime), Google Fonts (Poppins, Inter, Roboto Mono), Font Awesome icons
-- No test framework yet
+- Python 3.10+ (3.13 recommended)
+- Playwright (Chromium) for rendering
+- python-pptx for native shape generation
+- lxml (transitively, via python-pptx)
+
+Install: `pip install -e .` then `playwright install chromium`.
 
 ## CLI Usage
 
 ```
-python html_to_pptx.py [-i INPUT] [-o OUTPUT] [--width W] [--height H]
+python html_to_pptx.py [-i INPUT] [-o OUTPUT] [--width W] [--height H] [-s LEVEL]
+                       [--strict] [--no-javascript] [--allow-network HOST]
+                       [--block-network] [--tailwind-wait-ms MS]
+                       [--max-slides N] [-v|-vv]
 ```
 
-- `-i`, `--input` -- Directory with HTML files (default: `presentazione_html`)
-- `-o`, `--output` -- Output PPTX path (default: `Slides1.pptx`)
-- `--width` -- Viewport width in pixels (default: 1280)
-- `--height` -- Viewport height in pixels (default: 720)
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-i`, `--input` | Directory with HTML files | `presentazione_html` |
+| `-o`, `--output` | Output PPTX path | `Slides1.pptx` |
+| `--width`, `--height` | Viewport in CSS px | 1280x720 |
+| `-s`, `--simplify` | CSS simplification 0-10 | 0 |
+| `--strict` | Exit code 2 on any warning or partial save | off |
+| `--no-javascript` | Disable JS in headless Chromium (safest for untrusted decks) | off |
+| `--allow-network HOST` | Allowlist network host (repeatable) | tailwind/Google Fonts |
+| `--block-network` | Block ALL network (overrides allowlist) | off |
+| `--tailwind-wait-ms` | Cap on Tailwind JIT readiness wait | 1500 |
+| `--max-slides` | Hard cap on slide count | 5000 |
+| `-v`, `-vv` | Increase log verbosity | warning |
 
-Slide dimensions adapt to aspect ratio: height fixed at 7.5", width = `7.5 * width/height` inches (13.333" for 16:9, 10" for 4:3).
+Library entry point: `convert(input_dir=..., output=..., ...) -> ConversionReport`.
 
-## Critical Domain Knowledge
+## Architecture (single-file)
 
-### CSS px to PPTX pt conversion
-CSS pixels != typographic points. At 96 DPI: `1px = 0.75pt`. Always convert: `Pt(css_px * 0.75)`.
-Scale factor: `SLIDE_W / VP_W` EMU per pixel (recalculated when `--width`/`--height` change).
+- `SlideContext` (dataclass) -- holds viewport / slide / scale; passed to every
+  geometry helper. Replaces the legacy mutable module globals.
+- `ConversionReport` -- aggregated per-run statistics (skipped slides, failed
+  screenshots, timeouts, partial saves).
+- `WalkerOutput` / `ShapeEntry` / `TextEntry` / `SvgPrimitive` (TypedDicts) --
+  document the JS<->Python contract for the DOM walker output.
+- `parse_rgba` / `to_rgb` -- CSS color parsing supporting rgb/rgba (incl. CSS L4
+  space-separated), hsl/hsla, hex (3/4/6/8 digits), named colors. CSS L4
+  oklch/oklab/color/color-mix log a debug warning and return None.
+- `convert(...)` -- per-slide pipeline: HTML patch -> Chromium render -> walk DOM
+  -> extract -> screenshot fallback elements -> python-pptx assembly. Each slide
+  runs in its own `BrowserContext` so cookies / localStorage / service workers
+  cannot leak between attacker-controlled inputs.
 
-### Container detection (generic)
-The shared `FIND_CONTAINER_JS` constant is used by both the preprocessor and the main extractor. It finds the slide container by scanning visible direct children of `<body>` (skipping `SCRIPT`, `STYLE`, `LINK`, `META` tags and hidden elements) and selecting the one with the largest bounding area. If the best candidate has area < 100px, it returns `null` (slide is skipped).
+## Domain Knowledge
 
-There is no CSS-selector-based detection -- the algorithm is purely geometric. This makes the converter work with any HTML structure, not just Tailwind-based slides.
+### CSS px to EMU and pt
 
-### Font handling
-Two-tier font width compensation:
+- `EMU = ctx.px(v) = round(v * SCALE)`. `SCALE = SLIDE_W_EMU / VP_W` and lands
+  exactly on PowerPoint's canonical 12,192,000 EMU at 16:9.
+- `Pt = v * (72 / 96)` (96 DPI).
+- Coordinates use top-left origin in both DOM and PPTX EMU.
 
-**1. Browser-measured ratios (preferred):** The JS extractor measures each detected web font against its system fallback (Consolas for monospace, Segoe UI otherwise) using a reference string at 100px. Results are returned in `fontRatios` and take priority over hardcoded values.
+### Container detection
 
-**2. Hardcoded fallback ratios** (used when browser measurement is unavailable):
-- Poppins -> Segoe UI (ratio 1.137)
-- Inter -> Segoe UI (ratio 1.08)
-- Roboto Mono -> Consolas (ratio 1.092)
+- Find the largest `<body>` direct child by viewport-intersected bounding box.
+- Filters: `display:none`, `visibility:hidden`, `opacity:0`, `inert`,
+  `aria-hidden`, off-screen positioning, sub-pixel size.
+- Threshold: at least 100 px^2 (10x10).
 
-Unknown fonts pass through as-is (`FONT_MAP.get(web_font, web_font)`) with ratio 1.0. All ratios include a 5% safety margin (`(1.0 / ratio) * 1.05`).
+### Walker schema
 
-### DOM preprocessing (PREPROCESS_JS)
-Before the main extractor runs, `PREPROCESS_JS` modifies the DOM in-place to simplify structure. Currently it performs one transformation:
+- `out.shapes`: rect/oval entries. Per-axis border-radius `brX`/`brY` plus a
+  legacy single `br` for backward compat. CSS `z-index` captured as `z`.
+- `out.texts`: text runs with precise tx/tw from Range API + `multiline` flag
+  derived from `getClientRects().length > 1`.
+- `out.svgs` / `out.icons`: screenshot-fallback entries (with container width
+  cw/ch so Python applies the same skip threshold as JS).
+- `out.nativeSvgs[N].elements`: per-primitive entries flattened in `build_slide`
+  so they can interleave with surrounding HTML shapes in z-order.
+- `out.fontRatios`: web font -> Windows fallback width compensation. Cached on
+  `window.__h2pFontRatios` so subsequent slides skip the DOM-thrash measurement.
 
-**BR flattening:** Finds elements that directly contain `<br>` children, splits their child nodes around the `<br>` tags into separate `<div>` wrappers (preserving `text-align`). This ensures the walker creates separate text entries for each visual line. Consecutive `<br>` tags produce empty segments that are intentionally collapsed. The preprocessor is wrapped in try/except -- if it fails, conversion continues with a warning.
+### Sort and clipping
 
-### Circular shapes and borders
-The extractor detects circular elements (`border-radius >= 40%` of min dimension, roughly square aspect ratio, min 20px) and renders them as `MSO_SHAPE.OVAL` in PPTX. Non-circular elements with `border-radius > 4` use `ROUNDED_RECTANGLE`.
+- Top-level sort key: `(z, dp, seq)` ascending. Stable.
+- Borders use `dp + 0.5` so they paint between parent (dp) and child (dp+1).
+- Clipping happens against the viewport before sorting; text boxes drop only if
+  more than 50% overflows by height.
 
-Border outlines are handled differently for circular vs rectangular elements:
-- **Circular:** all four sides are checked; the largest width and first non-transparent color are used as a single oval outline.
-- **Rectangular:** each side (top, right, bottom, left) is rendered as an independent thin shape at `dp + 0.5` depth (between parent and child layers).
+### Paint paths
 
-### Tailwind CSS patching
-Conditional: only triggers when HTML contains a Tailwind v2 `<link>` tag (regex match). Replaces it with Play CDN `<script>` because v2 pre-built CSS doesn't support arbitrary values (`bg-[#060606]`). Non-Tailwind HTML is unaffected.
+- Circular elements (per-axis `>= 45%` AND aspect `< 1.15` AND minDim > 20) ->
+  `MSO_SHAPE.OVAL` with single oval outline.
+- Other rounded elements with single-axis radius > 4 -> `ROUNDED_RECTANGLE`.
+- Rectangular borders rendered as 4 thin shapes at `dp + 0.5`.
+- Native SVG primitives: circle/ellipse -> OVAL, rect -> rect/rounded, line/path/
+  polygon/polyline -> freeform via `build_freeform`. Multi-subpath paths fall
+  back to screenshot.
+- Hostile-HTML hardening: per-slide `BrowserContext`, network egress allowlist,
+  Symbol-keyed hide/restore state (instead of `window.__ssHidden`), strip
+  pre-existing `data-si`/`data-fi` from input HTML.
 
-### Flex overflow fix
-Injects `<style>.flex-1{min-height:0!important;min-width:0!important;}</style>` into all slides. Fixes flex-1 items overflowing fixed-height containers. Harmless on non-Tailwind HTML.
+### Output integrity
 
-## Approach to Bug Fixing
-
-- Solve problems with precise calculations, not hacks (no arbitrary % reductions)
-- Every fix must be grounded in measurable data (fonttools metrics, Range API bounds, browser measurements)
-- Test every change by regenerating the PPTX and visually inspecting output
-- When font metrics differ: compute the exact ratio, don't guess
+- Atomic write via `os.replace(tmp, output)`.
+- On failure, fall back to `<output>.partial.pptx` and (with `--strict`) exit 2.
 
 ## Workflow
 
-1. Edit `html_to_pptx.py`
-2. Run: `python html_to_pptx.py -i presentazione_html` (or use `run.bat`)
-3. Open output: `start Slides1.pptx`
-4. Export PDF from PowerPoint for comparison
+1. `pip install -e .` and `playwright install chromium`.
+2. `python html_to_pptx.py -i presentazione_html` (or `run.bat` / `run.sh`).
+3. `start Slides1.pptx` (Windows) / `open Slides1.pptx` (macOS) / `xdg-open Slides1.pptx` (Linux).
+4. For untrusted decks, add `--no-javascript --block-network` for maximum isolation.
 
 ## Known Limitations
 
-- Font Awesome icons and SVGs are screenshotted (not native PPTX) -- positioning may be slightly off
-- Complex CSS layouts (grid, flex) are approximated with absolute positioning
-- PowerPoint font substitution is unpredictable when web fonts are not installed
-- If save fails, attempts fallback to `.partial.pptx`
-- No automated testing -- verification is visual
+- CSS `oklch()`, `oklab()`, `color()`, `color-mix()` colors: not converted; logged at debug level.
+- Font Awesome glyphs and complex SVGs are screenshotted (rasterized).
+- Complex CSS layouts (grid, flex) are approximated with absolute positioning.
+- Pipeline is per-slide sequential. Worker-pool concurrency is a planned follow-up.
